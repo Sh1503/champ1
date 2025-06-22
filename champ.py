@@ -259,36 +259,36 @@ def load_github_data(github_raw_url):
 def load_league_data():
     data_sources = {
         "Premier League": [
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/epl.csv",
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/premier_league_csv.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/epl.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/premier_league_csv.csv"
         ],
         "La Liga": [
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/laliga.csv",
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/laliga_csv.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/laliga.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/laliga_csv.csv"
         ],
         "Serie A": [
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/seriea.csv",
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/serie_a_csv.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/seriea.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/serie_a_csv.csv"
         ],
         "Bundesliga": [
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/bundesliga.csv",
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/bundesliga_csv.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/bundesliga.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/bundesliga_csv.csv"
         ],
         "Ligue 1": [
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/ligue1.csv",
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/ligue1_csv.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/ligue1.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/ligue1_csv.csv"
         ],
         "Israeli Premier League": [
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/israeli_premier_league_csv.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/israeli_premier_league_csv.csv"
         ],
         "Champions League": [
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/champions_league_csv.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/champions_league_csv.csv"
         ],
         "Europa League": [
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/europa_league_csv.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/europa_league_csv.csv"
         ],
         "Conference League": [
-            "https://raw.githubusercontent.com/Sh1503/football-match-predictor/main/conference_league_csv.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/conference_league_csv.csv"
         ]
     }
     
