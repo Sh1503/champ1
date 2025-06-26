@@ -127,7 +127,7 @@ LEAGUE_TEAMS = {
         'Midtjylland', 'Hibernian',  # דנמרק, סקוטלנד
         'Ostrava'  # צ'כיה
     ],
-    # UEFA Conference League 2025/26 - כולל קבוצות מהמוקדמות
+    # UEFA Conference League 2025/26 - כולל קבוצות מהמוקדמות  
     'Conference League': [
         # כל הקבוצות נכנסות דרך מוקדמות - רשימה מורחבת
         'Crystal Palace', 'Fulham', 'Brentford',  # אנגליה
@@ -264,7 +264,7 @@ TEAM_RATINGS = {
     'Elfsborg': 31, 'St Gallen': 30,
     
     # קבוצות טיר 4 (20-29)
-    'Lugano': 29, 'Borac': 28, 'Jagiellonia': 27, 'LASK': 26,
+    'Borac': 28, 'Jagiellonia': 27, 'LASK': 26,
     'Omonia': 25, 'Maccabi Haifa': 24, 'Beitar Jerusalem': 23, 'Dinamo Tbilisi': 22,
     'Ararat-Armenia': 21, 'Ballkani': 20,
     
@@ -435,11 +435,8 @@ def predict_match(home_team, away_team, df, league_name=None):
         
         return result
     
-    # חיזוי רגיל לליגות מקומיות (הקוד הקיים עם הדיבאג)
-    st.write("🔍 **דיבאג מידע:**")
-    
+    # חיזוי רגיל לליגות מקומיות
     if df is None or df.empty:
-        st.error("❌ אין נתונים זמינים עבור הליגה הזו")
         return {
             "home_win": 0.42,
             "draw": 0.28,
@@ -449,28 +446,11 @@ def predict_match(home_team, away_team, df, league_name=None):
             "is_european": False
         }
     
-    # הצגת מידע על ה-DataFrame
-    st.write(f"📊 **גודל נתונים**: {len(df)} שורות, {len(df.columns)} עמודות")
-    st.write(f"🔤 **עמודות בנתונים**: {list(df.columns)}")
-    
-    # בדיקה איך נראים שמות הקבוצות בנתונים
-    if 'HomeTeam' in df.columns:
-        unique_home_teams = df['HomeTeam'].unique()[:10]
-        st.write(f"🏠 **דוגמאות קבוצות בית**: {list(unique_home_teams)}")
-    
-    if 'AwayTeam' in df.columns:
-        unique_away_teams = df['AwayTeam'].unique()[:10]
-        st.write(f"✈️ **דוגמאות קבוצות אורח**: {list(unique_away_teams)}")
-    
-    # בדיקה אם יש נתונים עבור הקבוצות הנבחרות
+    # חישוב ממוצעי שערים
     home_games = df[df['HomeTeam'] == home_team] if 'HomeTeam' in df.columns else pd.DataFrame()
     away_games = df[df['AwayTeam'] == away_team] if 'AwayTeam' in df.columns else pd.DataFrame()
     
-    st.write(f"🔍 **משחקי {home_team} בבית**: {len(home_games)}")
-    st.write(f"🔍 **משחקי {away_team} בחוץ**: {len(away_games)}")
-    
     if home_games.empty or away_games.empty:
-        st.warning(f"⚠️ לא נמצאו נתונים עבור {home_team} או {away_team} - משתמש בחיזוי בסיסי")
         return {
             "home_win": 0.42,
             "draw": 0.28,
@@ -480,11 +460,9 @@ def predict_match(home_team, away_team, df, league_name=None):
             "is_european": False
         }
     
-    # חישוב ממוצעי שערים אמיתיים
+    # חישוב ממוצעי שערים
     home_goals = home_games['FTHG'].mean() if 'FTHG' in df.columns and not home_games['FTHG'].empty else 1.5
     away_goals = away_games['FTAG'].mean() if 'FTAG' in df.columns and not away_games['FTAG'].empty else 1.2
-    
-    st.success(f"✅ **נתונים אמיתיים**: {home_team} ממוצע {home_goals:.2f} שערים בבית, {away_team} ממוצע {away_goals:.2f} שערים בחוץ")
     
     # הוספת יתרון בית
     home_goals *= 1.15
@@ -510,9 +488,6 @@ def predict_match(home_team, away_team, df, league_name=None):
         home_corners = home_games['HC'].mean() if not home_games['HC'].empty else 5.5
         away_corners = away_games['AC'].mean() if not away_games['AC'].empty else 5.0
         total_corners = round(home_corners + away_corners, 1)
-        st.info(f"🚩 **קרנות אמיתיות**: {home_team} ממוצע {home_corners:.1f}, {away_team} ממוצע {away_corners:.1f}")
-    else:
-        st.warning("⚠️ אין נתוני קרנות בקובץ")
     
     return {
         "home_win": round(home_win, 3),
