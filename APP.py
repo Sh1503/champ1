@@ -70,20 +70,20 @@ LEAGUE_TEAMS = {
         'Olympiacos',  # יוון - Champions League winner rebalancing
         
         # קבוצות מהסיבוב הראשון של המוקדמות
-        'Žalgiris', 'Hamrun Spartans',  # ליטא, מלטה
-        'KuPS', 'Milsami',  # פינלנד, מולדובה
-        'New Saints', 'Shkëndija',  # ויילס, מקדוניה הצפונית
-        'Iberia 1999', 'Malmö',  # גאורגיה, שוודיה
-        'Levadia', 'RFS',  # אסטוניה, לטביה
-        'Drita', 'Differdange 03',  # קוסובו, לוקסמבורג
-        'Víkingur', 'Lincoln Red Imps',  # איי פארו, גיברלטר
-        'Egnatia', 'Breidablik',  # אלבניה, איסלנד
-        'Shelbourne', 'Linfield',  # אירלנד, צפון אירלנד
-        'FCSB', 'Inter d\'Escaldes',  # רומניה, אנדורה
-        'Virtus', 'Zrinjski',  # סן מרינו, בוסניה
-        'Olimpija Ljubljana', 'Kairat',  # סלובניה, קזחסטן
-        'Noah', 'Budućnost',  # ארמניה, מונטנגרו
-        'Ludogorets', 'Dinamo Minsk',  # בולגריה, בלארוס
+        'Žalgiris', 'FK Žalgiris', 'Hamrun Spartans', 'Hamrun Spartans FC',  # ליטא, מלטה
+        'KuPS', 'KuPS Kuopio', 'Milsami', 'FC Milsami Orhei',  # פינלנד, מולדובה
+        'New Saints', 'The New Saints FC', 'Shkëndija', 'KF Shkëndija',  # ויילס, מקדוניה הצפונית
+        'Iberia 1999', 'FC Iberia 1999 Tbilisi', 'Malmö', 'Malmö FF',  # גאורגיה, שוודיה
+        'Levadia', 'FC Levadia Tallinn', 'RFS', 'FC RFS',  # אסטוניה, לטביה
+        'Drita', 'FC Drita', 'Differdange 03', 'FC Differdange 03',  # קוסובו, לוקסמבורג
+        'Víkingur', 'Lincoln Red Imps', 'Lincoln Red Imps FC',  # איי פארו, גיברלטר
+        'Egnatia', 'KF Egnatia', 'Breidablik',  # אלבניה, איסלנד
+        'Shelbourne', 'Shelbourne FC', 'Linfield', 'Linfield FC',  # אירלנד, צפון אירלנד
+        'FCSB', 'Fotbal Club FCSB', 'Inter d\'Escaldes', 'Inter Club d\'Escaldes',  # רומניה, אנדורה
+        'Virtus', 'Virtus AC 1964', 'Zrinjski', 'HŠK Zrinjski Mostar',  # סן מרינו, בוסניה
+        'Olimpija Ljubljana', 'NK Olimpija Ljubljana', 'Kairat', 'FC Kairat Almaty',  # סלובניה, קזחסטן
+        'Noah', 'FC Noah', 'Budućnost', 'FK Budućnost Podgorica',  # ארמניה, מונטנגרו
+        'Ludogorets', 'PFC Ludogorets 1945', 'Dinamo Minsk', 'FC Dinamo-Minsk',  # בולגריה, בלארוס
         
         # קבוצות מהסיבוב השני - League Path
         'Rangers', 'Panathinaikos',  # סקוטלנד, יוון
@@ -113,19 +113,19 @@ LEAGUE_TEAMS = {
         'Rapid Vienna',  # אוסטריה
         
         # קבוצות מהסיבוב הראשון של המוקדמות
-        'Shakhtar Donetsk', 'Ilves',  # אוקראינה, פינלנד
-        'Sheriff Tiraspol', 'Prishtina',  # מולדובה, קוסובו
-        'Spartak Trnava', 'Häcken',  # סלובקיה, שוודיה
-        'Sabah', 'Celje',  # אזרבייג'ן, סלובניה
-        'Legia Warsaw', 'Aktobe',  # פולין, קזחסטן
-        'Levski Sofia', 'Hapoel Beer Sheva',  # בולגריה, ישראל
-        'AEK Larnaca', 'Partizan',  # קפריסין, סרביה
-        'Paksi', 'CFR Cluj',  # הונגריה, רומניה
+        'Shakhtar Donetsk', 'FC Shakhtar Donetsk', 'Ilves', 'Ilves Tampere',  # אוקראינה, פינלנד
+        'Sheriff Tiraspol', 'FC Sheriff Tiraspol', 'Prishtina', 'FC Prishtina',  # מולדובה, קוסובו
+        'Spartak Trnava', 'FC Spartak Trnava', 'Häcken', 'BK Häcken',  # סלובקיה, שוודיה
+        'Sabah', 'Sabah FC', 'Celje', 'NK Celje',  # אזרבייג'ן, סלובניה
+        'Legia Warsaw', 'Legia Warszawa', 'Aktobe', 'FC Aktobe',  # פולין, קזחסטן
+        'Levski Sofia', 'PFC Levski Sofia', 'Hapoel Beer Sheva', 'Hapoel Beer-Sheva FC',  # בולגריה, ישראל
+        'AEK Larnaca', 'AEK Larnaca FC', 'Partizan', 'FK Partizan Beograd',  # קפריסין, סרביה
+        'Paksi', 'Paksi FC', 'CFR Cluj', 'CFR 1907 Cluj',  # הונגריה, רומניה
         
         # קבוצות מהסיבוב השני
-        'Lugano',  # שווייץ
-        'Midtjylland', 'Hibernian',  # דנמרק, סקוטלנד
-        'Ostrava'  # צ'כיה
+        'Lugano', 'FC Lugano',  # שווייץ
+        'Midtjylland', 'FC Midtjylland', 'Hibernian', 'Hibernian FC',  # דנמרק, סקוטלנד
+        'Ostrava', 'FC Baník Ostrava'  # צ'כיה
     ],
     # UEFA Conference League 2025/26 - כולל קבוצות מהמוקדמות  
     'Conference League': [
@@ -185,12 +185,21 @@ LEAGUE_TEAMS = {
         'Kalju',  # אסטוניה
         'Liepaja',  # לטביה
         'Jelgava',  # לטביה
-        'FCB Magpies'  # גיברלטר
+        'FCB Magpies',  # גיברלטר
+        
+        # קבוצות חסרות מהמחקר שלי - קבוצות מהסיבוב הראשון
+        'HJK Helsinki',  # פינלנד
+        'FC Torpedo Kutaisi', 'Ordabasy', 'FC Ordabasy',  # גאורגיה, קזחסטן
+        'Željezničar', 'FK Željezničar', 'Koper', 'FC Koper',  # בוסניה, סלובניה
+        'SJK Seinäjoki', 'Klaksvík', 'KÍ Klaksvík',  # פינלנד, איי פארו
+        'NSÍ Runavík',  # איי פארו
+        'Nõmme Kalju FC', 'Partizani', 'FK Partizani',  # אסטוניה, אלבניה
+        'SS Tre Fiori FC', 'Tre Fiori', 'Pyunik', 'FC Pyunik'  # סן מרינו, ארמניה
     ]
 }
 
 # ----------------------------
-# מערכת דירוגים לקבוצות אירופיות
+# מערכת דירוגים לקבוצות אירופיות - מעודכנת עם הקבוצות החסרות
 # ----------------------------
 TEAM_RATINGS = {
     # ליגת האלופות - דירוגים מבוססי ביצועים
@@ -211,16 +220,22 @@ TEAM_RATINGS = {
     # קבוצות טיר 4 (60-69)
     'Slavia Praha': 69, 'Olympiacos': 68, 'Rangers': 67, 'Salzburg': 66,
     'Viktoria Plzen': 65, 'Panathinaikos': 64, 'Servette': 63, 'Brann': 62,
-    'Malmö': 61, 'Ludogorets': 60,
+    'Malmö': 61, 'Malmö FF': 61, 'Ludogorets': 60, 'PFC Ludogorets 1945': 60,
     
     # קבוצות מהמוקדמות (40-59)
-    'FCSB': 59, 'Žalgiris': 58, 'New Saints': 57, 'Levadia': 56,
-    'Olimpija Ljubljana': 55, 'Noah': 54, 'Shelbourne': 53, 'Drita': 52,
-    'Víkingur': 51, 'Egnatia': 50, 'Hamrun Spartans': 49, 'KuPS': 48,
-    'Milsami': 47, 'Shkëndija': 46, 'Iberia 1999': 45, 'RFS': 44,
-    'Differdange 03': 43, 'Lincoln Red Imps': 42, 'Breidablik': 41,
-    'Linfield': 40, 'Inter d\'Escaldes': 39, 'Virtus': 38, 'Zrinjski': 37,
-    'Kairat': 36, 'Budućnost': 35, 'Dinamo Minsk': 34,
+    'FCSB': 59, 'Fotbal Club FCSB': 59, 'Žalgiris': 58, 'FK Žalgiris': 58,
+    'New Saints': 57, 'The New Saints FC': 57, 'Levadia': 56, 'FC Levadia Tallinn': 56,
+    'Olimpija Ljubljana': 55, 'NK Olimpija Ljubljana': 55, 'Noah': 54, 'FC Noah': 54,
+    'Shelbourne': 53, 'Shelbourne FC': 53, 'Drita': 52, 'FC Drita': 52,
+    'Víkingur': 51, 'Egnatia': 50, 'KF Egnatia': 50, 'Hamrun Spartans': 49, 'Hamrun Spartans FC': 49,
+    'KuPS': 48, 'KuPS Kuopio': 48, 'Milsami': 47, 'FC Milsami Orhei': 47,
+    'Shkëndija': 46, 'KF Shkëndija': 46, 'Iberia 1999': 45, 'FC Iberia 1999 Tbilisi': 45,
+    'RFS': 44, 'FC RFS': 44, 'Differdange 03': 43, 'FC Differdange 03': 43,
+    'Lincoln Red Imps': 42, 'Lincoln Red Imps FC': 42, 'Breidablik': 41,
+    'Linfield': 40, 'Linfield FC': 40, 'Inter d\'Escaldes': 39, 'Inter Club d\'Escaldes': 39,
+    'Virtus': 38, 'Virtus AC 1964': 38, 'Zrinjski': 37, 'HŠK Zrinjski Mostar': 37,
+    'Kairat': 36, 'FC Kairat Almaty': 36, 'Budućnost': 35, 'FK Budućnost Podgorica': 35,
+    'Dinamo Minsk': 34, 'FC Dinamo-Minsk': 34,
     
     # ליגת אירופה - דירוגים
     # קבוצות טיר 1 (70-79)
@@ -239,13 +254,18 @@ TEAM_RATINGS = {
     'Besiktas': 51, 'AEK Athens': 50,
     
     # קבוצות מהמוקדמות (30-49)
-    'CFR Cluj': 49, 'Anderlecht': 47, 'Copenhagen': 46,
-    'Molde': 45, 'Malmo': 44, 'Rapid Vienna': 43, 'Shakhtar Donetsk': 42,
-    'Sheriff Tiraspol': 41, 'Spartak Trnava': 40, 'Sabah': 39, 'Celje': 38,
-    'Legia Warsaw': 37, 'Levski Sofia': 36, 'Hapoel Beer Sheva': 35,
-    'AEK Larnaca': 34, 'Partizan': 33, 'Paksi': 32, 'Lugano': 31,
-    'Midtjylland': 30, 'Hibernian': 29, 'Ostrava': 28, 'Ilves': 27,
-    'Prishtina': 26, 'Häcken': 25, 'Aktobe': 24,
+    'CFR Cluj': 49, 'CFR 1907 Cluj': 49, 'Anderlecht': 47, 'Copenhagen': 46,
+    'Molde': 45, 'Malmo': 44, 'Rapid Vienna': 43, 'Shakhtar Donetsk': 42, 'FC Shakhtar Donetsk': 42,
+    'Sheriff Tiraspol': 41, 'FC Sheriff Tiraspol': 41, 'Spartak Trnava': 40, 'FC Spartak Trnava': 40,
+    'Sabah': 39, 'Sabah FC': 39, 'Celje': 38, 'NK Celje': 38,
+    'Legia Warsaw': 37, 'Legia Warszawa': 37, 'Levski Sofia': 36, 'PFC Levski Sofia': 36,
+    'Hapoel Beer Sheva': 35, 'Hapoel Beer-Sheva FC': 35,
+    'AEK Larnaca': 34, 'AEK Larnaca FC': 34, 'Partizan': 33, 'FK Partizan Beograd': 33,
+    'Paksi': 32, 'Paksi FC': 32, 'Lugano': 31, 'FC Lugano': 31,
+    'Midtjylland': 30, 'FC Midtjylland': 30, 'Hibernian': 29, 'Hibernian FC': 29,
+    'Ostrava': 28, 'FC Baník Ostrava': 28, 'Ilves': 27, 'Ilves Tampere': 27,
+    'Prishtina': 26, 'FC Prishtina': 26, 'Häcken': 25, 'BK Häcken': 25,
+    'Aktobe': 24, 'FC Aktobe': 24,
     
     # ליגת הקונפרנס - דירוגים
     # קבוצות טיר 1 (50-59)
@@ -273,7 +293,21 @@ TEAM_RATINGS = {
     'Rapid Bucharest': 15, 'Zilina': 14, 'Jablonec': 13, 'Ujpest': 12,
     'Warta Poznan': 11, 'Paide': 9, 'Valmiera': 8,
     'Vaduz': 7, 'Akureyri': 6, 'Dungannon Swifts': 5, 'Strassen': 4,
-    'Banga': 3, 'Dinamo Tirana': 2, 'FCB Magpies': 1
+    'Banga': 3, 'Dinamo Tirana': 2, 'FCB Magpies': 1,
+    
+    # קבוצות חסרות שנוספו מהמחקר
+    'HJK Helsinki': 26,  # פינלנד
+    'FC Torpedo Kutaisi': 22, 'Torpedo Kutaisi': 22,  # גאורגיה
+    'Ordabasy': 18, 'FC Ordabasy': 18,  # קזחסטן
+    'Željezničar': 25, 'FK Željezničar': 25,  # בוסניה
+    'Koper': 23, 'FC Koper': 23,  # סלובניה
+    'SJK Seinäjoki': 21,  # פינלנד
+    'Klaksvík': 19, 'KÍ Klaksvík': 19,  # איי פארו
+    'NSÍ Runavík': 15,  # איי פארו
+    'Kalju': 17, 'Nõmme Kalju FC': 17,  # אסטוניה
+    'Partizani': 20, 'FK Partizani': 20,  # אלבניה
+    'Tre Fiori': 10, 'SS Tre Fiori FC': 10,  # סן מרינו
+    'Pyunik': 16, 'FC Pyunik': 16  # ארמניה
 }
 
 # ----------------------------
@@ -620,7 +654,14 @@ with st.expander("ℹ️ אודות השיטה וההחדשות"):
     - 🔄 עדכון אוטומטי מ-GitHub
     - 🌐 תמיכה בכל הליגות הגדולות
     - 🎯 דיוק גבוה יותר עם מערכת הדירוגים החדשה
+    
+    ### 📝 עדכון אחרון:
+    **נוספו קבוצות חסרות מכל התחרויות:**
+    - ✅ כל הקבוצות מהשלב הראשון של המוקדמות
+    - ✅ שמות חלופיים ורשמיים לקבוצות קיימות
+    - ✅ דירוגים מעודכנים לכל הקבוצות החדשות
+    - ✅ תמיכה מלאה במשחקי המוקדמות של UEFA 2025/26
     """)
 
 st.markdown("---")
-st.markdown("*⚽ מערכת חיזוי מתקדמת מבוססת דירוגי UEFA ונתונים אמיתיים*")
+st.markdown("*⚽ מערכת חיזוי מתקדמת מבוססת דירוגי UEFA ונתונים אמיתיים - עדכון יולי 2025*")
