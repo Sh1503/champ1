@@ -259,12 +259,12 @@ TEAM_RATINGS = {
     'Reims': 67, 'Nantes': 66, 'Toulouse': 65, 'Montpellier': 64,
     'St Etienne': 63, 'Le Havre': 62, 'Auxerre': 61, 'Angers': 60,
     
-    # Israeli Premier League
-    'Maccabi Tel Aviv': 72, 'Maccabi Haifa': 69, 'Hapoel Beer Sheva': 66,
-    'Beitar Jerusalem': 64, 'Hapoel Tel Aviv': 63, 'Maccabi Netanya': 61,
-    'Hapoel Haifa': 60, 'Ashdod': 59, 'Hapoel Jerusalem': 58, 'Bnei Sakhnin': 57,
-    'Maccabi Bnei Raina': 56, 'Ironi Kiryat Shmona': 55, 'Hapoel Katamon': 54,
-    'Hapoel Petah Tikva': 53,
+    # Israeli Premier League - דירוגים מתוקנים לליגה הישראלית
+    'Maccabi Tel Aviv': 78, 'Maccabi Haifa': 75, 'Hapoel Beer Sheva': 73,
+    'Beitar Jerusalem': 70, 'Hapoel Tel Aviv': 68, 'Maccabi Netanya': 65,
+    'Hapoel Haifa': 63, 'Ashdod': 62, 'Hapoel Jerusalem': 61, 'Bnei Sakhnin': 60,
+    'Maccabi Bnei Raina': 58, 'Ironi Kiryat Shmona': 57, 'Hapoel Katamon': 56,
+    'Hapoel Petah Tikva': 55,
     
     # ליגת האלופות - דירוגים מבוססי ביצועים
     # קבוצות טיר 1 (90-100)
