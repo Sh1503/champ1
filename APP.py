@@ -194,21 +194,22 @@ TEAM_NAME_MAPPING = {
     # Premier League - תיקונים
     "Nott'm Forest": "Nottm Forest",
     
-    # Israeli Premier League - תרגום לעברית
-    "Maccabi Tel Aviv": "מכבי תל אביב",
-    "Maccabi Haifa": "מכבי חיפה", 
-    "Hapoel Beer Sheva": "הפועל באר שבע",
-    "Beitar Jerusalem": "בית\"ר ירושלים",
-    "Hapoel Tel Aviv": "הפועל תל אביב",
-    "Maccabi Netanya": "מכבי נתניה",
-    "Hapoel Haifa": "הפועל חיפה",
-    "Ashdod": "מועדון ספורט אשדוד",
-    "Hapoel Jerusalem": "הפועל ירושלים",
-    "Bnei Sakhnin": "בני סכנין",
-    "Maccabi Bnei Raina": "מכבי בני ריינה",
-    "Ironi Kiryat Shmona": "עירוני קריית שמונה",
-    "Hapoel Katamon": "הפועל קטמון",
-    "Hapoel Petah Tikva": "מכבי פתח תקווה"
+    # Israeli Premier League - השמות כבר באנגלית בקבצים!
+    # אין צורך בתרגום - הקבצים מכילים שמות באנגלית
+    "Maccabi Tel Aviv": "Maccabi Tel Aviv",
+    "Maccabi Haifa": "Maccabi Haifa", 
+    "Hapoel Beer Sheva": "Hapoel Beer Sheva",
+    "Beitar Jerusalem": "Beitar Jerusalem",
+    "Hapoel Tel Aviv": "Hapoel Tel Aviv",
+    "Maccabi Netanya": "Maccabi Netanya",
+    "Hapoel Haifa": "Hapoel Haifa",
+    "Ashdod": "Ashdod",
+    "Hapoel Jerusalem": "Hapoel Jerusalem",
+    "Bnei Sakhnin": "Bnei Sakhnin",
+    "Maccabi Bnei Raina": "Maccabi Bnei Raina",
+    "Ironi Kiryat Shmona": "Ironi Kiryat Shmona",
+    "Hapoel Katamon": "Hapoel Katamon",
+    "Hapoel Petah Tikva": "Hapoel Petah Tikva"
 }
 
 def get_team_name_for_data(team_name, league_name):
