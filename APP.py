@@ -832,7 +832,7 @@ if selected_league in LEAGUE_TEAMS:
         all_new_teams = new_teams_la_liga + new_teams_serie_a + new_teams_bundesliga + new_teams_ligue1
         
         if home_team in all_new_teams or away_team in all_new_teams:
-            st.info("🆕 **קבוצה חדשה במשחק** - החיזוי מבוסס על הערכת כוח מהליגה הנמוכה")ות
+            st.info("🆕 **קבוצה חדשה במשחק** - החיזוי מבוסס על הערכת כוח מהליגה הנמוכה")
         new_teams_la_liga = ['Levante', 'Elche', 'Real Oviedo']
         new_teams_serie_a = ['Sassuolo', 'Pisa', 'Cremonese']
         new_teams_bundesliga = ['FC Koln', 'Hamburger SV']
