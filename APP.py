@@ -14,7 +14,7 @@ st.set_page_config(
 st.title("⚽ Football Match Predictor Pro - עונת 2025/2026")
 
 # ----------------------------
-# קבוצות לפי ליגה - מעודכן לפי UEFA 2025/26
+# קבוצות לפי ליגה - עונת 2025/26
 # ----------------------------
 LEAGUE_TEAMS = {
     'Premier League': [
@@ -24,26 +24,28 @@ LEAGUE_TEAMS = {
         "Nott'm Forest", 'Sunderland', 'Tottenham', 'West Ham', 'Wolves'
     ],
     'La Liga': [
-        'Alaves', 'Almeria', 'Ath Bilbao', 'Ath Madrid', 'Barcelona', 'Betis',
-        'Cadiz', 'Celta', 'Getafe', 'Girona', 'Las Palmas', 'Leganes',
-        'Mallorca', 'Osasuna', 'Real Madrid', 'Sevilla', 'Sociedad',
-        'Valencia', 'Valladolid', 'Villarreal'
+        'Alaves', 'Ath Bilbao', 'Ath Madrid', 'Barcelona', 'Betis',
+        'Celta', 'Elche', 'Getafe', 'Girona', 'Las Palmas', 'Levante',
+        'Mallorca', 'Osasuna', 'Real Madrid', 'Real Oviedo', 'Sevilla', 
+        'Sociedad', 'Valencia', 'Valladolid', 'Villarreal'
     ],
     'Serie A': [
-        'Atalanta', 'Bologna', 'Cagliari', 'Como', 'Empoli', 'Fiorentina',
+        'Atalanta', 'Bologna', 'Cagliari', 'Como', 'Cremonese', 'Fiorentina',
         'Genoa', 'Inter', 'Juventus', 'Lazio', 'Lecce', 'Milan', 'Monza',
-        'Napoli', 'Parma', 'Roma', 'Torino', 'Udinese', 'Venezia', 'Verona'
+        'Napoli', 'Parma', 'Pisa', 'Roma', 'Sassuolo', 'Torino', 'Udinese',
+        'Venezia', 'Verona'
     ],
     'Bundesliga': [
         'Augsburg', 'Bayern Munich', 'Bochum', 'Dortmund', 'Ein Frankfurt',
-        'Freiburg', 'Heidenheim', 'Hoffenheim', 'Holstein Kiel', 'Leverkusen',
-        "M'gladbach", 'Mainz', 'RB Leipzig', 'St Pauli', 'Stuttgart',
-        'Union Berlin', 'Werder Bremen', 'Wolfsburg'
+        'FC Koln', 'Freiburg', 'Hamburger SV', 'Heidenheim', 'Hoffenheim', 
+        'Holstein Kiel', 'Leverkusen', "M'gladbach", 'Mainz', 'RB Leipzig', 
+        'St Pauli', 'Stuttgart', 'Werder Bremen', 'Wolfsburg'
     ],
     'Ligue 1': [
-        'Angers', 'Auxerre', 'Brest', 'Le Havre', 'Lens', 'Lille', 'Lyon',
-        'Marseille', 'Monaco', 'Montpellier', 'Nantes', 'Nice', 'Paris SG',
-        'Reims', 'Rennes', 'St Etienne', 'Strasbourg', 'Toulouse'
+        'Angers', 'Auxerre', 'Brest', 'FC Lorient', 'FC Metz', 'Lens', 
+        'Lille', 'Lyon', 'Marseille', 'Monaco', 'Montpellier', 'Nantes', 
+        'Nice', 'Paris FC', 'Paris SG', 'Reims', 'Rennes', 'St Etienne', 
+        'Strasbourg'
     ],
     'Israeli Premier League': [
         'Maccabi Tel Aviv', 'Maccabi Haifa', 'Hapoel Beer Sheva', 'Beitar Jerusalem',
@@ -131,37 +133,45 @@ def get_team_name_for_data(team_name, league_name):
     return team_name
 
 # ----------------------------
-# מערכת דירוגים
+# מערכת דירוגים מעודכנת לעונת 2025-26
 # ----------------------------
 DOMESTIC_LEAGUE_RATINGS = {
+    # Premier League
     'Man City': 92, 'Arsenal': 88, 'Liverpool': 87, 'Chelsea': 82,
     'Newcastle': 79, 'Man United': 78, 'Tottenham': 77, 'Brighton': 74,
     'Aston Villa': 73, 'West Ham': 71, 'Crystal Palace': 68, 'Fulham': 67,
     'Brentford': 66, 'Wolves': 65, 'Everton': 64, "Nott'm Forest": 63,
     'Bournemouth': 62, 'Leeds United': 61, 'Burnley': 58, 'Sunderland': 57,
     
+    # La Liga - עם הקבוצות החדשות
     'Real Madrid': 94, 'Barcelona': 89, 'Ath Madrid': 84, 'Sevilla': 76,
     'Sociedad': 75, 'Betis': 74, 'Villarreal': 73, 'Ath Bilbao': 72,
     'Valencia': 71, 'Celta': 69, 'Osasuna': 68, 'Getafe': 67,
-    'Mallorca': 66, 'Girona': 65, 'Las Palmas': 64, 'Leganes': 62,
-    'Alaves': 61, 'Valladolid': 60, 'Cadiz': 59, 'Almeria': 58,
+    'Mallorca': 66, 'Girona': 65, 'Las Palmas': 64, 'Alaves': 61,
+    'Valladolid': 60, 'Levante': 59, 'Elche': 58, 'Real Oviedo': 57,
     
+    # Serie A - עם הקבוצות החדשות
     'Inter': 87, 'Juventus': 84, 'Milan': 83, 'Napoli': 82, 'Atalanta': 81,
     'Roma': 78, 'Lazio': 77, 'Fiorentina': 74, 'Bologna': 71, 'Torino': 69,
     'Genoa': 68, 'Udinese': 67, 'Monza': 66, 'Parma': 65, 'Venezia': 64,
-    'Como': 63, 'Empoli': 62, 'Lecce': 61, 'Cagliari': 60, 'Verona': 59,
+    'Como': 63, 'Lecce': 61, 'Cagliari': 60, 'Verona': 59, 'Sassuolo': 58,
+    'Pisa': 57, 'Cremonese': 56,
     
+    # Bundesliga - עם הקבוצות החדשות
     'Bayern Munich': 91, 'Dortmund': 85, 'Leverkusen': 84, 'RB Leipzig': 80,
-    'Ein Frankfurt': 76, 'Stuttgart': 75, 'Freiburg': 72, 'Union Berlin': 71,
-    "M'gladbach": 70, 'Hoffenheim': 69, 'Wolfsburg': 68, 'Werder Bremen': 67,
-    'Mainz': 66, 'Augsburg': 65, 'Heidenheim': 64, 'St Pauli': 63,
-    'Holstein Kiel': 62, 'Bochum': 61,
+    'Ein Frankfurt': 76, 'Stuttgart': 75, 'Freiburg': 72, 'Hoffenheim': 69,
+    "M'gladbach": 70, 'Wolfsburg': 68, 'Werder Bremen': 67, 'Mainz': 66,
+    'Augsburg': 65, 'Heidenheim': 64, 'St Pauli': 63, 'Holstein Kiel': 62,
+    'Bochum': 61, 'FC Koln': 60, 'Hamburger SV': 59,
     
+    # Ligue 1 - עם הקבוצות החדשות
     'Paris SG': 90, 'Monaco': 79, 'Marseille': 78, 'Lyon': 76, 'Lille': 75,
     'Nice': 74, 'Rennes': 73, 'Lens': 72, 'Strasbourg': 69, 'Brest': 68,
-    'Reims': 67, 'Nantes': 66, 'Toulouse': 65, 'Montpellier': 64,
-    'St Etienne': 63, 'Le Havre': 62, 'Auxerre': 61, 'Angers': 60,
+    'Reims': 67, 'Nantes': 66, 'Montpellier': 64, 'St Etienne': 63,
+    'Auxerre': 61, 'Angers': 60, 'FC Lorient': 59, 'Paris FC': 58,
+    'FC Metz': 57,
     
+    # Israeli Premier League
     'Maccabi Tel Aviv': 78, 'Maccabi Haifa': 75, 'Hapoel Beer Sheva': 73,
     'Beitar Jerusalem': 70, 'Hapoel Tel Aviv': 68, 'Maccabi Netanya': 65,
     'Hapoel Haifa': 63, 'Ashdod': 62, 'Hapoel Jerusalem': 61, 'Bnei Sakhnin': 60,
@@ -169,7 +179,9 @@ DOMESTIC_LEAGUE_RATINGS = {
     'Hapoel Petah Tikva': 55,
 }
 
+# דירוגים לליגות אירופיות
 EUROPEAN_LEAGUE_RATINGS = {
+    # ליגת האלופות
     'Real Madrid': 98, 'Man City': 96, 'Bayern Munich': 95, 'Paris SG': 94,
     'Barcelona': 93, 'Liverpool': 92, 'Arsenal': 91, 'Inter': 90,
     'Dortmund': 89, 'Chelsea': 88, 'Ath Madrid': 87, 'Milan': 86,
@@ -187,6 +199,7 @@ EUROPEAN_LEAGUE_RATINGS = {
     'Breidablik': 41, 'Linfield': 40, 'Inter d\'Escaldes': 39, 'Virtus': 38,
     'Zrinjski': 37, 'Kairat': 36, 'Budućnost': 35, 'Dinamo Minsk': 34,
     
+    # ליגת אירופה
     'Man United': 79, 'Roma': 78, 'West Ham': 77, 'Lazio': 76,
     'Betis': 75, 'Brighton': 74, 'Fiorentina': 73, 'Hoffenheim': 72,
     'Nice': 71, 'AZ Alkmaar': 70, 'Sociedad': 69, 'Sevilla': 68,
@@ -203,6 +216,7 @@ EUROPEAN_LEAGUE_RATINGS = {
     'Ostrava': 28, 'Ilves': 27, 'Prishtina': 26, 'Häcken': 25,
     'Aktobe': 24,
     
+    # ליגת הקונפרנס
     'Crystal Palace': 59, 'Fulham': 58, 'Brentford': 57, 'Genoa': 56,
     'Empoli': 55, 'Monza': 54, 'Getafe': 53, 'Mallorca': 52,
     'Osasuna': 51, 'Augsburg': 50, 'St Pauli': 49, 'Heidenheim': 48,
@@ -236,7 +250,7 @@ def get_team_rating(team_name, league_name):
         return DOMESTIC_LEAGUE_RATINGS.get(team_name, 65)
 
 # ----------------------------
-# טעינת נתונים
+# טעינת נתונים מ-GitHub
 # ----------------------------
 def load_github_data(github_raw_url):
     try:
@@ -590,6 +604,61 @@ def display_data_quality(df, league_name):
     except Exception as e:
         st.error(f"❌ שגיאה בעיבוד הנתונים: {e}")
         return False
+    """חיזוי בסיסי מבוסס דירוגים"""
+    
+    european_leagues = ['Champions League', 'Europa League', 'Conference League']
+    
+    if league_name in european_leagues:
+        return predict_european_match(home_team, away_team, league_name)
+    
+    home_rating = get_team_rating(home_team, league_name)
+    away_rating = get_team_rating(away_team, league_name)
+    
+    base_home_advantage = 0.15
+    
+    expected_home_goals = 1.5 + (home_rating - 65) * 0.02 + base_home_advantage
+    expected_away_goals = 1.2 + (away_rating - 65) * 0.02
+    
+    expected_home_goals = max(0.3, min(4.0, expected_home_goals))
+    expected_away_goals = max(0.3, min(4.0, expected_away_goals))
+    
+    max_goals = 6
+    home_win = draw = away_win = 0.0
+    
+    for i in range(max_goals + 1):
+        for j in range(max_goals + 1):
+            p = poisson.pmf(i, expected_home_goals) * poisson.pmf(j, expected_away_goals)
+            if i > j:
+                home_win += p
+            elif i == j:
+                draw += p
+            else:
+                away_win += p
+    
+    rating_diff = home_rating - away_rating
+    prob_adjustment = rating_diff * 0.01
+    
+    home_win += prob_adjustment
+    away_win -= prob_adjustment
+    
+    total_prob = home_win + draw + away_win
+    if total_prob > 0:
+        home_win /= total_prob
+        draw /= total_prob
+        away_win /= total_prob
+    
+    total_corners = 10.0 + (home_rating + away_rating - 130) * 0.05
+    
+    return {
+        "home_win": round(max(0.05, min(0.85, home_win)), 3),
+        "draw": round(max(0.05, min(0.50, draw)), 3),
+        "away_win": round(max(0.05, min(0.85, away_win)), 3),
+        "total_goals": round(expected_home_goals + expected_away_goals, 1),
+        "total_corners": round(total_corners, 1),
+        "home_rating": home_rating,
+        "away_rating": away_rating,
+        "has_historical_data": False
+    }
 
 # ----------------------------
 # ממשק משתמש
@@ -606,7 +675,7 @@ league_categories = {
 }
 
 # בחירת ליגה
-st.markdown("### 🏟️ בחר תחרות ומשחק")
+st.markdown("### 🏟️ בחר תחרות ומשחק - עונת 2025/26")
 
 selected_category = st.selectbox("בחר קטגוריה", options=list(league_categories.keys()))
 available_leagues = league_categories[selected_category]
@@ -621,6 +690,20 @@ else:
 
 if selected_league in LEAGUE_TEAMS:
     teams = LEAGUE_TEAMS[selected_league]
+    
+    # הצגת מידע על קבוצות חדשות
+    if selected_league == 'La Liga':
+        st.success("🆕 **קבוצות חדשות**: Levante, Elche, Real Oviedo")
+        st.warning("⬇️ **קבוצות שירדו**: Granada, Almeria, Cadiz")
+    elif selected_league == 'Serie A':
+        st.success("🆕 **קבוצות חדשות**: Sassuolo, Pisa, Cremonese")
+        st.warning("⬇️ **קבוצות שירדו**: Frosinone, Salernitana, Empoli")
+    elif selected_league == 'Bundesliga':
+        st.success("🆕 **קבוצות חדשות**: FC Koln, Hamburger SV")
+        st.warning("⬇️ **קבוצות שירדו**: Darmstadt, Union Berlin")
+    elif selected_league == 'Ligue 1':
+        st.success("🆕 **קבוצות חדשות**: FC Lorient, Paris FC, FC Metz")
+        st.warning("⬇️ **קבוצות שירדו**: Clermont Foot, Toulouse FC, Le Havre")
     
     col1, col2 = st.columns(2)
     
@@ -638,6 +721,7 @@ if selected_league in LEAGUE_TEAMS:
         st.markdown("---")
         st.subheader("🎯 תוצאות החיזוי")
         
+        # הצגת דירוגים (אם לא אירופי)
         european_leagues = ['Champions League', 'Europa League', 'Conference League']
         if selected_league not in european_leagues:
             col1, col2 = st.columns(2)
@@ -646,6 +730,7 @@ if selected_league in LEAGUE_TEAMS:
             with col2:
                 st.success(f"⭐ **דירוג {away_team}**: {prediction['away_rating']}/100")
         
+        # הצגת הסתברויות
         col1, col2, col3 = st.columns(3)
         
         with col1:
@@ -666,6 +751,7 @@ if selected_league in LEAGUE_TEAMS:
                 value=f"{prediction['away_win']*100:.1f}%"
             )
         
+        # סטטיסטיקות נוספות
         st.markdown("---")
         st.subheader("📊 סטטיסטיקות המשחק")
         
@@ -677,6 +763,7 @@ if selected_league in LEAGUE_TEAMS:
         with col2:
             st.metric("🚩 קרנות צפויות", f"{prediction['total_corners']}")
         
+        # הצגת נתונים היסטוריים אם זמינים (רק לליגות מקומיות)
         if selected_league not in european_leagues and prediction.get('has_historical_data'):
             st.markdown("---")
             st.subheader("📈 נתונים היסטוריים")
@@ -701,6 +788,7 @@ if selected_league in LEAGUE_TEAMS:
                     st.write(f"• ממוצע שערים: {away_stats['avg_goals_scored']:.1f}")
                     st.write(f"• ממוצע נגד: {away_stats['avg_goals_conceded']:.1f}")
         
+        # המלצות
         st.markdown("---")
         st.subheader("💡 המלצות הימור")
         
@@ -713,11 +801,13 @@ if selected_league in LEAGUE_TEAMS:
         else:
             st.success(f"✈️ **ההימור המומלץ**: ניצחון ל-{away_team} ({prediction['away_win']*100:.1f}%)")
         
+        # המלצות נוספות לשערים
         if prediction['total_goals'] > 2.5:
             st.info(f"⚽ **משחק התקפי**: המלצה על מעל 2.5 שערים (צפוי: {prediction['total_goals']})")
         else:
             st.info(f"🛡️ **משחק הגנתי**: המלצה על מתחת ל-2.5 שערים (צפוי: {prediction['total_goals']})")
         
+        # אמינות החיזוי
         if selected_league in european_leagues:
             rating_diff = abs(prediction['home_rating'] - prediction['away_rating'])
             if rating_diff > 15:
@@ -732,27 +822,89 @@ if selected_league in LEAGUE_TEAMS:
                 st.info("📊 **אמינות טובה** - מבוסס על נתונים היסטוריים ודירוגים")
             else:
                 st.info("⚠️ **אמינות בינונית** - מבוסס על דירוגי קבוצות בלבד")
+        
+        # מידע על הקבוצות החדשות
+        new_teams_la_liga = ['Levante', 'Elche', 'Real Oviedo']
+        new_teams_serie_a = ['Sassuolo', 'Pisa', 'Cremonese']
+        new_teams_bundesliga = ['FC Koln', 'Hamburger SV']
+        new_teams_ligue1 = ['FC Lorient', 'Paris FC', 'FC Metz']
+        
+        all_new_teams = new_teams_la_liga + new_teams_serie_a + new_teams_bundesliga + new_teams_ligue1
+        
+        if home_team in all_new_teams or away_team in all_new_teams:
+            st.info("🆕 **קבוצה חדשה במשחק** - החיזוי מבוסס על הערכת כוח מהליגה הנמוכה")ות
+        new_teams_la_liga = ['Levante', 'Elche', 'Real Oviedo']
+        new_teams_serie_a = ['Sassuolo', 'Pisa', 'Cremonese']
+        new_teams_bundesliga = ['FC Koln', 'Hamburger SV']
+        new_teams_ligue1 = ['FC Lorient', 'Paris FC', 'FC Metz']
+        
+        all_new_teams = new_teams_la_liga + new_teams_serie_a + new_teams_bundesliga + new_teams_ligue1
+        
+        if home_team in all_new_teams or away_team in all_new_teams:
+            st.info("🆕 **קבוצה חדשה במשחק** - החיזוי מבוסס על הערכת כוח מהליגה הנמוכה")
 
 # מידע נוסף
-with st.expander("ℹ️ אודות השיטה"):
+with st.expander("ℹ️ אודות השיטה והחדשות"):
     st.markdown("""
-    ### 🔧 שיטת החיזוי:
+    ### 🔧 שיטת החיזוי המתקדמת:
     
-    **ליגות מקומיות:**
-    - שילוב נתונים היסטוריים עם דירוגי קבוצות
-    - משקל של 40% לנתונים היסטוריים, 60% לדירוגים
-    - מודל פואסון לחישוב הסתברויות
+    **🎯 חיזוי משולב מתוקן:**
+    - 📊 שילוב נתונים היסטוריים עם דירוגי קבוצות
+    - ⚖️ משקל של 40% לנתונים היסטוריים, 60% לדירוגים
+    - 🎯 חיזוי מדויק יותר כשיש מספיק נתונים
     
-    **ליגות אירופיות:**
-    - דירוגי קבוצות מתקדמים (1-100)
-    - התחשבות ברמת התחרות
-    - יתרון בית משתנה
+    **📈 ניתוח מתקדם:**
+    - 📊 ניתוח ביצועי קבוצות בבית/חוץ נפרד
+    - 🏆 חישוב אחוזי ניצחון אמיתיים
+    - ⚽ ממוצע שערים מול ממוצע שערים נגד
     
-    **רמות אמינות:**
-    - 🔥 גבוהה: הפרש דירוגים >15
-    - 📊 טובה: נתונים היסטוריים + דירוגים
-    - ⚠️ בינונית: דירוגי קבוצות בלבד
+    **🔍 מקורות הנתונים:**
+    - **ליגות מקומיות**: נתונים היסטוריים אמיתיים מ-GitHub
+    - **ליגות אירופיות**: דירוגי קבוצות מבוססי ביצועים
+    - **עדכון אוטומטי**: הנתונים נטענים מהמאגר ב-GitHub
+    
+    **🆕 עדכונים לעונת 2025/26:**
+    - **La Liga**: Levante, Elche, Real Oviedo עלו | Granada, Almeria, Cadiz ירדו
+    - **Serie A**: Sassuolo, Pisa, Cremonese עלו | Frosinone, Salernitana, Empoli ירדו
+    - **Bundesliga**: FC Koln, Hamburger SV עלו | Darmstadt, Union Berlin ירדו
+    - **Ligue 1**: FC Lorient, Paris FC, FC Metz עלו | Clermont Foot, Toulouse FC, Le Havre ירדו
+    
+    **📋 רמות אמינות:**
+    - 🔥 **גבוהה**: הפרש דירוגים >15 + נתונים היסטוריים
+    - 📊 **טובה**: נתונים היסטוריים מ-5+ משחקים
+    - ⚠️ **בינונית**: מבוסס על דירוגי קבוצות בלבד
+    
+    **🎲 מודל החיזוי:**
+    - מודל פואסון מתקדם לחישוב הסתברויות
+    - יתרון בית משתנה לפי סוג הליגה
+    - התחשבות ביכולת התקפית והגנתית
+    - נורמליזציה של הסתברויות לתוצאות הגיוניות
     """)
 
+# הצגת טבלת דירוגים
+with st.expander("📊 טבלת דירוגים - עונת 2025/26"):
+    selected_league_for_ratings = st.selectbox(
+        "בחר ליגה לצפייה בדירוגים:",
+        options=['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1']
+    )
+    
+    if selected_league_for_ratings in LEAGUE_TEAMS:
+        teams_ratings = []
+        for team in LEAGUE_TEAMS[selected_league_for_ratings]:
+            rating = get_team_rating(team, selected_league_for_ratings)
+            teams_ratings.append((team, rating))
+        
+        teams_ratings.sort(key=lambda x: x[1], reverse=True)
+        
+        st.markdown(f"### 🏆 {selected_league_for_ratings} - דירוגים")
+        
+        for i, (team, rating) in enumerate(teams_ratings, 1):
+            if i <= 4:
+                st.success(f"{i}. **{team}** - {rating}/100")
+            elif i <= 10:
+                st.info(f"{i}. **{team}** - {rating}/100")
+            else:
+                st.write(f"{i}. **{team}** - {rating}/100")
+
 st.markdown("---")
-st.markdown("*⚽ מערכת חיזוי מתקדמת - Football Predictor Pro 2025*")
+st.markdown("*⚽ Football Predictor Pro - עונת 2025/26 | חיזוי מתקדם מבוסס נתונים אמיתיים + דירוגי קבוצות*")
