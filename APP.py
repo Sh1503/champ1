@@ -223,9 +223,11 @@ def get_team_name_for_data(team_name, league_name):
     return team_name
 
 # ----------------------------
-# מערכת דירוגים לקבוצות אירופיות - מעודכנת עם הקבוצות החסרות
+# מערכת דירוגים מחולקת לפי סוג ליגה
 # ----------------------------
-TEAM_RATINGS = {
+
+# דירוגים לליגות מקומיות
+DOMESTIC_LEAGUE_RATINGS = {
     # Premier League
     'Man City': 92, 'Arsenal': 88, 'Liverpool': 87, 'Chelsea': 82,
     'Newcastle': 79, 'Man United': 78, 'Tottenham': 77, 'Brighton': 74,
@@ -265,7 +267,10 @@ TEAM_RATINGS = {
     'Hapoel Haifa': 63, 'Ashdod': 62, 'Hapoel Jerusalem': 61, 'Bnei Sakhnin': 60,
     'Maccabi Bnei Raina': 58, 'Ironi Kiryat Shmona': 57, 'Hapoel Katamon': 56,
     'Hapoel Petah Tikva': 55,
-    
+}
+
+# דירוגים לליגות אירופיות (רמה בינלאומית)
+EUROPEAN_LEAGUE_RATINGS = {
     # ליגת האלופות - דירוגים מבוססי ביצועים
     # קבוצות טיר 1 (90-100)
     'Real Madrid': 98, 'Man City': 96, 'Bayern Munich': 95, 'Paris SG': 94,
@@ -357,6 +362,15 @@ TEAM_RATINGS = {
     'Osijek': 18, 'Llapi': 16, 'Alashkert': 16, 'Zira': 8, 'Petrocub': 9
 }
 
+def get_team_rating(team_name, league_name):
+    """מחזיר דירוג קבוצה לפי סוג הליגה"""
+    european_leagues = ['Champions League', 'Europa League', 'Conference League']
+    
+    if league_name in european_leagues:
+        return EUROPEAN_LEAGUE_RATINGS.get(team_name, 50)
+    else:
+        return DOMESTIC_LEAGUE_RATINGS.get(team_name, 65)
+
 # ----------------------------
 # טעינת נתונים מ-GitHub
 # ----------------------------
@@ -430,9 +444,9 @@ def load_league_data():
 def predict_european_match(home_team, away_team, competition_type):
     """חיזוי מתקדם לליגות אירופיות"""
     
-    # קבלת דירוגים
-    home_rating = TEAM_RATINGS.get(home_team, 50)
-    away_rating = TEAM_RATINGS.get(away_team, 50)
+    # קבלת דירוגים מהמערכת האירופית
+    home_rating = get_team_rating(home_team, competition_type)
+    away_rating = get_team_rating(away_team, competition_type)
     
     # יתרון בית משתנה לפי רמת התחרות
     home_advantage = {
@@ -578,9 +592,9 @@ def predict_match_advanced(home_team, away_team, df, league_name=None):
         return result
     
     # חיזוי מתקדם לליגות מקומיות
-    # קבלת דירוגים
-    home_rating = TEAM_RATINGS.get(home_team, 65)
-    away_rating = TEAM_RATINGS.get(away_team, 65)
+    # קבלת דירוגים לפי סוג הליגה
+    home_rating = get_team_rating(home_team, league_name)
+    away_rating = get_team_rating(away_team, league_name)
     
     # ניתוח נתונים היסטוריים
     home_stats = analyze_team_performance(home_team, df, is_home=True, league_name=league_name)
