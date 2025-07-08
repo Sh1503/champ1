@@ -107,6 +107,7 @@ LEAGUE_TEAMS = {
 # ----------------------------
 TEAM_NAME_MAPPING = {
     "Nott'm Forest": "Nottm Forest",
+    "Leeds United": "Leeds",
     "Maccabi Tel Aviv": "Maccabi Tel Aviv",
     "Maccabi Haifa": "Maccabi Haifa", 
     "Hapoel Beer Sheva": "Hapoel Beer Sheva",
@@ -120,7 +121,12 @@ TEAM_NAME_MAPPING = {
     "Maccabi Bnei Raina": "Maccabi Bnei Raina",
     "Ironi Kiryat Shmona": "Ironi Kiryat Shmona",
     "Hapoel Katamon": "Hapoel Katamon",
-    "Hapoel Petah Tikva": "Hapoel Petah Tikva"
+    "Hapoel Petah Tikva": "Hapoel Petah Tikva",
+    # מיפויים נוספים לקבוצות שעלו
+    "FC Koln": "FC Cologne",
+    "Ein Frankfurt": "Eintracht Frankfurt",
+    "M'gladbach": "Borussia Mgladbach",
+    "RB Leipzig": "RB Leipzig"
 }
 
 def get_team_name_for_data(team_name, league_name):
@@ -141,7 +147,7 @@ DOMESTIC_LEAGUE_RATINGS = {
     'Newcastle': 79, 'Man United': 78, 'Tottenham': 77, 'Brighton': 74,
     'Aston Villa': 73, 'West Ham': 71, 'Crystal Palace': 68, 'Fulham': 67,
     'Brentford': 66, 'Wolves': 65, 'Everton': 64, "Nott'm Forest": 63,
-    'Bournemouth': 62, 'Leeds United': 61, 'Burnley': 58, 'Sunderland': 57,
+    'Bournemouth': 62, 'Burnley': 58, 'Sunderland': 57,
     
     # La Liga - עם הקבוצות החדשות
     'Real Madrid': 94, 'Barcelona': 89, 'Ath Madrid': 84, 'Sevilla': 76,
@@ -240,17 +246,8 @@ EUROPEAN_LEAGUE_RATINGS = {
     'Llapi': 16, 'Alashkert': 16, 'Zira': 8, 'Petrocub': 9
 }
 
-def get_team_rating(team_name, league_name):
-    """מחזיר דירוג קבוצה לפי סוג הליגה"""
-    european_leagues = ['Champions League', 'Europa League', 'Conference League']
-    
-    if league_name in european_leagues:
-        return EUROPEAN_LEAGUE_RATINGS.get(team_name, 50)
-    else:
-        return DOMESTIC_LEAGUE_RATINGS.get(team_name, 65)
-
 # ----------------------------
-# טעינת נתונים מ-GitHub
+# טעינת נתונים מ-GitHub - מורחבת
 # ----------------------------
 def load_github_data(github_raw_url):
     try:
@@ -258,7 +255,7 @@ def load_github_data(github_raw_url):
         response.raise_for_status()
         return pd.read_csv(StringIO(response.text))
     except Exception as e:
-        st.error(f"שגיאה בטעינת נתונים: {e}")
+        st.error(f"שגיאה בטעינת נתונים מ-{github_raw_url}: {e}")
         return None
 
 def clean_numeric_columns(df):
@@ -287,26 +284,37 @@ def clean_numeric_columns(df):
 
 @st.cache_data(ttl=3600)
 def load_league_data():
+    """טעינת נתונים מורחבת עם היסטוריה של עונות קודמות"""
     data_sources = {
         "Premier League": [
             "https://raw.githubusercontent.com/Sh1503/champ1/main/epl.csv",
-            "https://raw.githubusercontent.com/Sh1503/champ1/main/premier_league_csv.csv.txt"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/premier_league_csv.csv.txt",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/PL2223.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/PL2324.csv"
         ],
         "La Liga": [
             "https://raw.githubusercontent.com/Sh1503/champ1/main/laliga.csv",
-            "https://raw.githubusercontent.com/Sh1503/champ1/main/laliga_csv.csv.txt"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/laliga_csv.csv.txt",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/LALIGA2223.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/LALIGA2324.csv"
         ],
         "Serie A": [
             "https://raw.githubusercontent.com/Sh1503/champ1/main/seriea.csv",
-            "https://raw.githubusercontent.com/Sh1503/champ1/main/serie_a_csv.csv.txt"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/serie_a_csv.csv.txt",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/SERIE_A_2223.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/SERIE_A2324.csv"
         ],
         "Bundesliga": [
             "https://raw.githubusercontent.com/Sh1503/champ1/main/bundesliga.csv",
-            "https://raw.githubusercontent.com/Sh1503/champ1/main/bundesliga_csv.csv.txt"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/bundesliga_csv.csv.txt",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/BUNDESLIGA2223.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/BUNDESLIGA2324.csv"
         ],
         "Ligue 1": [
             "https://raw.githubusercontent.com/Sh1503/champ1/main/ligue1.csv",
-            "https://raw.githubusercontent.com/Sh1503/champ1/main/ligue1_csv.csv.txt"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/ligue1_csv.csv.txt",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/LIGUE1_2223.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/LIGUE_1_2324.csv"
         ],
         "Israeli Premier League": [
             "https://raw.githubusercontent.com/Sh1503/champ1/main/israel_league.csv",
@@ -344,7 +352,191 @@ def load_league_data():
     return league_data
 
 # ----------------------------
-# פונקציות חיזוי
+# פונקציות ניתוח ביצועים היסטוריים
+# ----------------------------
+def analyze_historical_performance(team_name, all_data):
+    """ניתוח ביצועים היסטוריים של קבוצה בכל הליגות"""
+    
+    total_stats = {
+        'games_played': 0,
+        'wins': 0,
+        'draws': 0,
+        'losses': 0,
+        'goals_scored': 0,
+        'goals_conceded': 0
+    }
+    
+    # קבל את שם הקבוצה המתאים לנתונים
+    team_variations = [team_name, get_team_name_for_data(team_name, "")]
+    
+    # חפש בכל הנתונים ההיסטוריים
+    for league, df in all_data.items():
+        if df is None or df.empty:
+            continue
+            
+        # בדוק עבור כל וריאציות שם הקבוצה
+        for team_variant in team_variations:
+            # בדוק גם בבית וגם בחוץ
+            home_games = df[df['HomeTeam'] == team_variant]
+            away_games = df[df['AwayTeam'] == team_variant]
+            
+            # חשב סטטיסטיקות בית
+            for _, game in home_games.iterrows():
+                try:
+                    home_goals = int(game['FTHG'])
+                    away_goals = int(game['FTAG'])
+                    
+                    total_stats['games_played'] += 1
+                    total_stats['goals_scored'] += home_goals
+                    total_stats['goals_conceded'] += away_goals
+                    
+                    if home_goals > away_goals:
+                        total_stats['wins'] += 1
+                    elif home_goals == away_goals:
+                        total_stats['draws'] += 1
+                    else:
+                        total_stats['losses'] += 1
+                except:
+                    continue
+            
+            # חשב סטטיסטיקות חוץ
+            for _, game in away_games.iterrows():
+                try:
+                    home_goals = int(game['FTHG'])
+                    away_goals = int(game['FTAG'])
+                    
+                    total_stats['games_played'] += 1
+                    total_stats['goals_scored'] += away_goals
+                    total_stats['goals_conceded'] += home_goals
+                    
+                    if away_goals > home_goals:
+                        total_stats['wins'] += 1
+                    elif away_goals == home_goals:
+                        total_stats['draws'] += 1
+                    else:
+                        total_stats['losses'] += 1
+                except:
+                    continue
+    
+    if total_stats['games_played'] >= 15:  # רק אם יש מספיק משחקים
+        return total_stats
+    
+    return None
+
+def calculate_performance_bonus(stats):
+    """חישוב בונוס ביצועים מנתונים היסטוריים"""
+    
+    if not stats or stats['games_played'] == 0:
+        return 0
+    
+    win_rate = stats['wins'] / stats['games_played']
+    avg_goals_scored = stats['goals_scored'] / stats['games_played']
+    avg_goals_conceded = stats['goals_conceded'] / stats['games_played']
+    goal_difference = avg_goals_scored - avg_goals_conceded
+    
+    bonus = 0
+    
+    # בונוס לאחוז ניצחונות
+    if win_rate > 0.65:
+        bonus += 12
+    elif win_rate > 0.55:
+        bonus += 8
+    elif win_rate > 0.45:
+        bonus += 5
+    elif win_rate > 0.35:
+        bonus += 2
+    
+    # בונוס ליחס שערים
+    if goal_difference > 1.2:
+        bonus += 10
+    elif goal_difference > 0.8:
+        bonus += 7
+    elif goal_difference > 0.3:
+        bonus += 4
+    elif goal_difference > 0:
+        bonus += 2
+    elif goal_difference > -0.3:
+        bonus += 1
+    
+    # בונוס לכמות שערים (התקפיות)
+    if avg_goals_scored > 2.2:
+        bonus += 4
+    elif avg_goals_scored > 1.8:
+        bonus += 2
+    elif avg_goals_scored > 1.5:
+        bonus += 1
+    
+    return min(18, bonus)  # מקסימום 18 נקודות בונוס
+
+def calculate_promoted_team_rating(team_name, league_name, all_data):
+    """חישוב דירוג מבוסס ביצועים היסטוריים לקבוצות עולות"""
+    
+    # דירוגי בסיס לקבוצות עולות
+    base_ratings = {
+        'Premier League': 62,
+        'La Liga': 60, 
+        'Serie A': 61,
+        'Bundesliga': 63,
+        'Ligue 1': 59
+    }
+    
+    base_rating = base_ratings.get(league_name, 60)
+    
+    # נסה למצוא נתונים היסטוריים של הקבוצה
+    historical_performance = analyze_historical_performance(team_name, all_data)
+    
+    if historical_performance:
+        performance_bonus = calculate_performance_bonus(historical_performance)
+        adjusted_rating = min(78, base_rating + performance_bonus)
+        
+        # הצג מידע על החישוב
+        win_rate = historical_performance['wins'] / historical_performance['games_played']
+        avg_goals = historical_performance['goals_scored'] / historical_performance['games_played']
+        
+        st.info(f"""
+        🆕 **דירוג מחושב עבור {team_name}**: {adjusted_rating}/100
+        
+        📊 **בסיס נתונים היסטוריים**:
+        • משחקים: {historical_performance['games_played']}
+        • אחוז ניצחונות: {win_rate:.1%}
+        • ממוצע שערים: {avg_goals:.1f}
+        • בונוס ביצועים: +{performance_bonus} נקודות
+        """)
+        
+        return adjusted_rating
+    
+    return base_rating
+
+def get_team_rating(team_name, league_name, all_data=None):
+    """מחזיר דירוג קבוצה משופר עם תמיכה בקבוצות חדשות"""
+    
+    european_leagues = ['Champions League', 'Europa League', 'Conference League']
+    
+    if league_name in european_leagues:
+        return EUROPEAN_LEAGUE_RATINGS.get(team_name, 50)
+    
+    # בדוק אם יש דירוג קיים
+    if team_name in DOMESTIC_LEAGUE_RATINGS:
+        return DOMESTIC_LEAGUE_RATINGS[team_name]
+    
+    # אם זו קבוצה חדשה, חשב דירוג מבוסס נתונים היסטוריים
+    if all_data:
+        calculated_rating = calculate_promoted_team_rating(team_name, league_name, all_data)
+        return calculated_rating
+    
+    # דירוג ברירת מחדל לקבוצות חדשות
+    default_ratings = {
+        'Premier League': 62,
+        'La Liga': 60,
+        'Serie A': 61, 
+        'Bundesliga': 63,
+        'Ligue 1': 59
+    }
+    
+    return default_ratings.get(league_name, 60)
+
+# ----------------------------
+# פונקציות חיזוי משופרות
 # ----------------------------
 def predict_european_match(home_team, away_team, competition_type):
     """חיזוי מתקדם לליגות אירופיות"""
@@ -472,7 +664,7 @@ def analyze_team_performance(team, df, is_home=True, league_name=None):
     return stats
 
 def predict_match_advanced(home_team, away_team, df, league_name=None):
-    """חיזוי מתקדם משולב"""
+    """חיזוי מתקדם משולב עם נתונים היסטוריים"""
     
     european_leagues = ['Champions League', 'Europa League', 'Conference League']
     
@@ -492,8 +684,11 @@ def predict_match_advanced(home_team, away_team, df, league_name=None):
         
         return result
     
-    home_rating = get_team_rating(home_team, league_name)
-    away_rating = get_team_rating(away_team, league_name)
+    # טען את כל הנתונים לחישוב דירוגים מתקדמים
+    all_data = load_league_data()
+    
+    home_rating = get_team_rating(home_team, league_name, all_data)
+    away_rating = get_team_rating(away_team, league_name, all_data)
     
     home_stats = analyze_team_performance(home_team, df, is_home=True, league_name=league_name)
     away_stats = analyze_team_performance(away_team, df, is_home=False, league_name=league_name)
@@ -604,64 +799,9 @@ def display_data_quality(df, league_name):
     except Exception as e:
         st.error(f"❌ שגיאה בעיבוד הנתונים: {e}")
         return False
-    """חיזוי בסיסי מבוסס דירוגים"""
-    
-    european_leagues = ['Champions League', 'Europa League', 'Conference League']
-    
-    if league_name in european_leagues:
-        return predict_european_match(home_team, away_team, league_name)
-    
-    home_rating = get_team_rating(home_team, league_name)
-    away_rating = get_team_rating(away_team, league_name)
-    
-    base_home_advantage = 0.15
-    
-    expected_home_goals = 1.5 + (home_rating - 65) * 0.02 + base_home_advantage
-    expected_away_goals = 1.2 + (away_rating - 65) * 0.02
-    
-    expected_home_goals = max(0.3, min(4.0, expected_home_goals))
-    expected_away_goals = max(0.3, min(4.0, expected_away_goals))
-    
-    max_goals = 6
-    home_win = draw = away_win = 0.0
-    
-    for i in range(max_goals + 1):
-        for j in range(max_goals + 1):
-            p = poisson.pmf(i, expected_home_goals) * poisson.pmf(j, expected_away_goals)
-            if i > j:
-                home_win += p
-            elif i == j:
-                draw += p
-            else:
-                away_win += p
-    
-    rating_diff = home_rating - away_rating
-    prob_adjustment = rating_diff * 0.01
-    
-    home_win += prob_adjustment
-    away_win -= prob_adjustment
-    
-    total_prob = home_win + draw + away_win
-    if total_prob > 0:
-        home_win /= total_prob
-        draw /= total_prob
-        away_win /= total_prob
-    
-    total_corners = 10.0 + (home_rating + away_rating - 130) * 0.05
-    
-    return {
-        "home_win": round(max(0.05, min(0.85, home_win)), 3),
-        "draw": round(max(0.05, min(0.50, draw)), 3),
-        "away_win": round(max(0.05, min(0.85, away_win)), 3),
-        "total_goals": round(expected_home_goals + expected_away_goals, 1),
-        "total_corners": round(total_corners, 1),
-        "home_rating": home_rating,
-        "away_rating": away_rating,
-        "has_historical_data": False
-    }
 
 # ----------------------------
-# ממשק משתמש
+# ממשק משתמש משופר
 # ----------------------------
 
 # טעינת נתונים
@@ -686,21 +826,24 @@ if selected_league in data:
     data_quality = display_data_quality(data[selected_league], selected_league)
 else:
     st.warning(f"⚠️ לא נמצאו נתונים היסטוריים עבור {selected_league}")
-    st.info("החיזוי יתבסס על דירוגי קבוצות בלבד")
+    st.info("החיזוי יתבסס על דירוגי קבוצות ונתונים היסטוריים חכמים")
 
 if selected_league in LEAGUE_TEAMS:
     teams = LEAGUE_TEAMS[selected_league]
     
     # הצגת מידע על קבוצות חדשות
-    if selected_league == 'La Liga':
+    if selected_league == 'Premier League':
+        st.success("🆕 **קבוצות חדשות**: Leeds United, Burnley, Sunderland")
+        st.warning("⬇️ **קבוצות שירדו**: Sheffield United, Luton Town, Nottingham Forest")
+    elif selected_league == 'La Liga':
         st.success("🆕 **קבוצות חדשות**: Levante, Elche, Real Oviedo")
         st.warning("⬇️ **קבוצות שירדו**: Granada, Almeria, Cadiz")
     elif selected_league == 'Serie A':
-        st.success("🆕 **קבוצות חדשות**: Sassuolo, Pisa, Cremonese")
-        st.warning("⬇️ **קבוצות שירדו**: Frosinone, Salernitana, Empoli")
+        st.success("🆕 **קבוצות חדשות**: Parma, Como, Venezia")
+        st.warning("⬇️ **קבוצות שירדו**: Frosinone, Salernitana, Sassuolo")
     elif selected_league == 'Bundesliga':
-        st.success("🆕 **קבוצות חדשות**: FC Koln, Hamburger SV")
-        st.warning("⬇️ **קבוצות שירדו**: Darmstadt, Union Berlin")
+        st.success("🆕 **קבוצות חדשות**: FC Koln, Hamburger SV, St Pauli")
+        st.warning("⬇️ **קבוצות שירדו**: Darmstadt, Koln, Union Berlin")
     elif selected_league == 'Ligue 1':
         st.success("🆕 **קבוצות חדשות**: FC Lorient, Paris FC, FC Metz")
         st.warning("⬇️ **קבוצות שירדו**: Clermont Foot, Toulouse FC, Le Havre")
@@ -721,14 +864,12 @@ if selected_league in LEAGUE_TEAMS:
         st.markdown("---")
         st.subheader("🎯 תוצאות החיזוי")
         
-        # הצגת דירוגים (אם לא אירופי)
-        european_leagues = ['Champions League', 'Europa League', 'Conference League']
-        if selected_league not in european_leagues:
-            col1, col2 = st.columns(2)
-            with col1:
-                st.success(f"⭐ **דירוג {home_team}**: {prediction['home_rating']}/100")
-            with col2:
-                st.success(f"⭐ **דירוג {away_team}**: {prediction['away_rating']}/100")
+        # הצגת דירוגים
+        col1, col2 = st.columns(2)
+        with col1:
+            st.success(f"⭐ **דירוג {home_team}**: {prediction['home_rating']}/100")
+        with col2:
+            st.success(f"⭐ **דירוג {away_team}**: {prediction['away_rating']}/100")
         
         # הצגת הסתברויות
         col1, col2, col3 = st.columns(3)
@@ -763,7 +904,8 @@ if selected_league in LEAGUE_TEAMS:
         with col2:
             st.metric("🚩 קרנות צפויות", f"{prediction['total_corners']}")
         
-        # הצגת נתונים היסטוריים אם זמינים (רק לליגות מקומיות)
+        # הצגת נתונים היסטוריים אם זמינים
+        european_leagues = ['Champions League', 'Europa League', 'Conference League']
         if selected_league not in european_leagues and prediction.get('has_historical_data'):
             st.markdown("---")
             st.subheader("📈 נתונים היסטוריים")
@@ -808,77 +950,77 @@ if selected_league in LEAGUE_TEAMS:
             st.info(f"🛡️ **משחק הגנתי**: המלצה על מתחת ל-2.5 שערים (צפוי: {prediction['total_goals']})")
         
         # אמינות החיזוי
+        rating_diff = abs(prediction['home_rating'] - prediction['away_rating'])
         if selected_league in european_leagues:
-            rating_diff = abs(prediction['home_rating'] - prediction['away_rating'])
             if rating_diff > 15:
                 st.info("🔥 **אמינות גבוהה** - הפרש דירוגים משמעותי")
             else:
                 st.info("📊 **אמינות טובה** - מבוסס על דירוגי קבוצות מתקדמים")
         else:
-            rating_diff = abs(prediction['home_rating'] - prediction['away_rating'])
             if rating_diff > 15:
                 st.info("🔥 **אמינות גבוהה** - הפרש דירוגים משמעותי")
             elif prediction.get('has_historical_data'):
-                st.info("📊 **אמינות טובה** - מבוסס על נתונים היסטוריים ודירוגים")
+                st.info("📊 **אמינות טובה** - מבוסס על נתונים היסטוריים ודירוגים חכמים")
             else:
-                st.info("⚠️ **אמינות בינונית** - מבוסס על דירוגי קבוצות בלבד")
+                st.info("⚠️ **אמינות בינונית** - מבוסס על דירוגי קבוצות ונתונים היסטוריים")
         
-        # מידע על הקבוצות החדשות
-        new_teams_la_liga = ['Levante', 'Elche', 'Real Oviedo']
-        new_teams_serie_a = ['Sassuolo', 'Pisa', 'Cremonese']
-        new_teams_bundesliga = ['FC Koln', 'Hamburger SV']
-        new_teams_ligue1 = ['FC Lorient', 'Paris FC', 'FC Metz']
+        # מידע על קבוצות חדשות
+        new_teams_all = ['Leeds United', 'Levante', 'Elche', 'Real Oviedo', 'Parma', 'Como', 'Venezia', 
+                        'FC Koln', 'Hamburger SV', 'St Pauli', 'FC Lorient', 'Paris FC', 'FC Metz']
         
-        all_new_teams = new_teams_la_liga + new_teams_serie_a + new_teams_bundesliga + new_teams_ligue1
-        
-        if home_team in all_new_teams or away_team in all_new_teams:
-            st.info("🆕 **קבוצה חדשה במשחק** - החיזוי מבוסס על הערכת כוח מהליגה הנמוכה")
-        new_teams_la_liga = ['Levante', 'Elche', 'Real Oviedo']
-        new_teams_serie_a = ['Sassuolo', 'Pisa', 'Cremonese']
-        new_teams_bundesliga = ['FC Koln', 'Hamburger SV']
-        new_teams_ligue1 = ['FC Lorient', 'Paris FC', 'FC Metz']
-        
-        all_new_teams = new_teams_la_liga + new_teams_serie_a + new_teams_bundesliga + new_teams_ligue1
-        
-        if home_team in all_new_teams or away_team in all_new_teams:
-            st.info("🆕 **קבוצה חדשה במשחק** - החיזוי מבוסס על הערכת כוח מהליגה הנמוכה")
+        if home_team in new_teams_all or away_team in new_teams_all:
+            st.info("🆕 **קבוצה חדשה במשחק** - החיזוי מבוסס על נתונים היסטוריים חכמים וביצועים בליגה הנמוכה")
 
 # מידע נוסף
 with st.expander("ℹ️ אודות השיטה והחדשות"):
     st.markdown("""
-    ### 🔧 שיטת החיזוי המתקדמת:
+    ### 🔧 שיטת החיזוי המתקדמת החדשה:
     
-    **🎯 חיזוי משולב מתוקן:**
-    - 📊 שילוב נתונים היסטוריים עם דירוגי קבוצות
+    **🎯 חיזוי משולב מתוקן עם נתונים היסטוריים:**
+    - 📊 שילוב נתונים היסטוריים עם דירוגי קבוצות מחושבים
     - ⚖️ משקל של 40% לנתונים היסטוריים, 60% לדירוגים
+    - 🧠 **חדש**: דירוגים מחושבים לקבוצות עולות על בסיס ביצועים בליגה הקודמת
     - 🎯 חיזוי מדויק יותר כשיש מספיק נתונים
     
-    **📈 ניתוח מתקדם:**
-    - 📊 ניתוח ביצועי קבוצות בבית/חוץ נפרד
-    - 🏆 חישוב אחוזי ניצחון אמיתיים
-    - ⚽ ממוצע שערים מול ממוצע שערים נגד
+    **📈 ניתוח מתקדם לקבוצות חדשות:**
+    - 📊 ניתוח ביצועי קבוצות בכל הליגות ההיסטוריות
+    - 🏆 חישוב בונוס ביצועים על בסיס אחוז ניצחונות ויחס שערים
+    - ⚽ התחשבות בהתקפיות וביצועים הגנתיים
+    - 🔄 עדכון דירוגים בזמן אמת עבור קבוצות ללא דירוג קבוע
     
-    **🔍 מקורות הנתונים:**
-    - **ליגות מקומיות**: נתונים היסטוריים אמיתיים מ-GitHub
+    **🔍 מקורות הנתונים המורחבים:**
+    - **ליגות מקומיות**: נתונים היסטוריים מ-3+ עונות כולל עונות 22/23, 23/24, 24/25
     - **ליגות אירופיות**: דירוגי קבוצות מבוססי ביצועים
+    - **קבוצות עולות**: חישוב דירוג מבוסס ביצועים היסטוריים בכל הליגות
     - **עדכון אוטומטי**: הנתונים נטענים מהמאגר ב-GitHub
     
     **🆕 עדכונים לעונת 2025/26:**
+    - **Premier League**: Leeds United, Burnley, Sunderland עלו
     - **La Liga**: Levante, Elche, Real Oviedo עלו | Granada, Almeria, Cadiz ירדו
-    - **Serie A**: Sassuolo, Pisa, Cremonese עלו | Frosinone, Salernitana, Empoli ירדו
-    - **Bundesliga**: FC Koln, Hamburger SV עלו | Darmstadt, Union Berlin ירדו
+    - **Serie A**: Parma, Como, Venezia עלו | Frosinone, Salernitana, Sassuolo ירדו
+    - **Bundesliga**: FC Koln, Hamburger SV, St Pauli עלו | Darmstadt, Koln, Union Berlin ירדו
     - **Ligue 1**: FC Lorient, Paris FC, FC Metz עלו | Clermont Foot, Toulouse FC, Le Havre ירדו
     
-    **📋 רמות אמינות:**
-    - 🔥 **גבוהה**: הפרש דירוגים >15 + נתונים היסטוריים
-    - 📊 **טובה**: נתונים היסטוריים מ-5+ משחקים
-    - ⚠️ **בינונית**: מבוסס על דירוגי קבוצות בלבד
+    **📋 רמות אמינות משופרות:**
+    - 🔥 **גבוהה**: הפרש דירוגים >15 + נתונים היסטוריים עשירים
+    - 📊 **טובה**: נתונים היסטוריים מ-5+ משחקים או דירוג מחושב חכם
+    - ⚠️ **בינונית**: מבוסס על דירוגי קבוצות ונתונים חלקיים
     
-    **🎲 מודל החיזוי:**
+    **🎲 מודל החיזוי המשופר:**
     - מודל פואסון מתקדם לחישוב הסתברויות
-    - יתרון בית משתנה לפי סוג הליגה
-    - התחשבות ביכולת התקפית והגנתית
+    - יתרון בית משתנה לפי סוג הליגה ורמת הקבוצות
+    - התחשבות ביכולת התקפית והגנתית מנתונים אמיתיים
+    - **חדש**: חישוב דירוגים דינמי לקבוצות ללא דירוג קבוע
     - נורמליזציה של הסתברויות לתוצאות הגיוניות
+    
+    **🧮 חישוב דירוג לקבוצות עולות:**
+    - דירוג בסיס לפי רמת הליגה (60-63 נקודות)
+    - בונוס עד 18 נקודות על בסיס ביצועים היסטוריים:
+      • אחוז ניצחונות (עד 12 נקודות)
+      • יחס שערים (עד 10 נקודות) 
+      • התקפיות (עד 4 נקודות)
+    - דירוג מקסימלי 78 נקודות לקבוצה עולה
+    - הצגת פירוט החישוב בזמן אמת
     """)
 
 # הצגת טבלת דירוגים
@@ -890,8 +1032,10 @@ with st.expander("📊 טבלת דירוגים - עונת 2025/26"):
     
     if selected_league_for_ratings in LEAGUE_TEAMS:
         teams_ratings = []
+        all_data_for_ratings = load_league_data()
+        
         for team in LEAGUE_TEAMS[selected_league_for_ratings]:
-            rating = get_team_rating(team, selected_league_for_ratings)
+            rating = get_team_rating(team, selected_league_for_ratings, all_data_for_ratings)
             teams_ratings.append((team, rating))
         
         teams_ratings.sort(key=lambda x: x[1], reverse=True)
@@ -899,12 +1043,61 @@ with st.expander("📊 טבלת דירוגים - עונת 2025/26"):
         st.markdown(f"### 🏆 {selected_league_for_ratings} - דירוגים")
         
         for i, (team, rating) in enumerate(teams_ratings, 1):
+            # סמן קבוצות חדשות
+            new_teams_by_league = {
+                'Premier League': ['Leeds United', 'Burnley', 'Sunderland'],
+                'La Liga': ['Levante', 'Elche', 'Real Oviedo'],
+                'Serie A': ['Parma', 'Como', 'Venezia'],
+                'Bundesliga': ['FC Koln', 'Hamburger SV', 'St Pauli'],
+                'Ligue 1': ['FC Lorient', 'Paris FC', 'FC Metz']
+            }
+            
+            is_new_team = team in new_teams_by_league.get(selected_league_for_ratings, [])
+            new_indicator = " 🆕" if is_new_team else ""
+            
             if i <= 4:
-                st.success(f"{i}. **{team}** - {rating}/100")
+                st.success(f"{i}. **{team}** - {rating}/100{new_indicator}")
             elif i <= 10:
-                st.info(f"{i}. **{team}** - {rating}/100")
+                st.info(f"{i}. **{team}** - {rating}/100{new_indicator}")
             else:
-                st.write(f"{i}. **{team}** - {rating}/100")
+                st.write(f"{i}. **{team}** - {rating}/100{new_indicator}")
+
+# הצגת נתונים על קבוצות חדשות
+with st.expander("🆕 מידע על קבוצות חדשות ודירוגים מחושבים"):
+    st.markdown("""
+    ### 📈 קבוצות עולות ודירוגים חכמים
+    
+    **🔄 איך מחושב הדירוג לקבוצות חדשות:**
+    
+    1. **דירוג בסיס לפי ליגה**:
+       - Premier League: 62 נקודות
+       - Bundesliga: 63 נקודות  
+       - Serie A: 61 נקודות
+       - La Liga: 60 נקודות
+       - Ligue 1: 59 נקודות
+    
+    2. **ניתוח ביצועים היסטוריים** (מינימום 15 משחקים):
+       - סריקת כל הנתונים ההיסטוריים מכל הליגות
+       - חישוב אחוז ניצחונות, יחס שערים, התקפיות
+    
+    3. **חישוב בונוס ביצועים**:
+       - **אחוז ניצחונות גבוה**: עד 12 נקודות
+       - **יחס שערים חיובי**: עד 10 נקודות
+       - **התקפיות גבוהה**: עד 4 נקודות
+    
+    4. **דירוג סופי**: בסיס + בונוס (מקסימום 78)
+    
+    **📊 דוגמאות להשפעה**:
+    - קבוצה עם 65% ניצחונות ויחס שערים +1.2: בונוס ~15 נקודות
+    - קבוצה עם 45% ניצחונות ויחס שערים +0.3: בונוס ~6 נקודות  
+    - קבוצה עם 35% ניצחונות ויחס שערים שלילי: בונוס ~2 נקודות
+    
+    **🎯 יתרונות השיטה**:
+    - דירוג מדויק יותר מאשר הערכה סטטית
+    - התחשבות בכוח אמיתי של הקבוצה
+    - עדכון אוטומטי בהתבסס על נתונים אמיתיים
+    - שקיפות מלאה בחישוב הדירוג
+    """)
 
 st.markdown("---")
-st.markdown("*⚽ Football Predictor Pro - עונת 2025/26 | חיזוי מתקדם מבוסס נתונים אמיתיים + דירוגי קבוצות*")
+st.markdown("*⚽ Football Predictor Pro - עונת 2025/26 | חיזוי מתקדם עם נתונים היסטוריים חכמים + דירוגי קבוצות דינמיים*")
