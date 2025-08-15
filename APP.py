@@ -70,10 +70,10 @@ LEAGUE_TEAMS = {
         'Napoli', 'Parma', 'Roma', 'Torino', 'Udinese', 'Venezia', 'Verona'
     ],
     'ליגת העל הישראלית': [
-        'Ashdod', 'Beitar Jerusalem', 'Bnei Sakhnin', 'Hapoel Beer Sheva', 
-        'Hapoel Haifa', 'Hapoel Jerusalem', 'Hapoel Petah Tikva', 'Hapoel Tel Aviv',
-        'Ironi Kiryat Shmona', 'Ironi Tiberias', 'Maccabi Bnei Raina', 
-        'Maccabi Haifa', 'Maccabi Netanya', 'Maccabi Tel Aviv'
+        'Maccabi Tel Aviv', 'Maccabi Haifa', 'Hapoel Beer Sheva', 'Beitar Jerusalem',
+        'Hapoel Tel Aviv', 'Bnei Sakhnin', 'Hapoel Jerusalem', 'Hapoel Haifa',
+        'Maccabi Netanya', 'Ashdod', 'Hapoel Petah Tikva', 'Maccabi Bnei Raina',
+        'Ironi Kiryat Shmona', 'Ironi Tiberias'
     ],
     'Champions League': [
         'Real Madrid', 'Barcelona', 'Ath Madrid', 'Athletic Bilbao',
@@ -102,13 +102,16 @@ LEAGUE_TEAMS = {
     ]
 }
 
-# נתוני ביצועים של קבוצות אירופיות
+# נתוני ביצועים מורחבים של קבוצות אירופיות
 EUROPEAN_TEAM_STATS = {
+    # קבוצות חזקות מאוד
     'Real Madrid': {'home_goals': 2.9, 'away_goals': 2.3, 'home_conceded': 0.8, 'away_conceded': 1.0, 'strength': 96},
     'Barcelona': {'home_goals': 2.7, 'away_goals': 2.1, 'home_conceded': 0.9, 'away_conceded': 1.2, 'strength': 91},
     'Bayern Munich': {'home_goals': 3.0, 'away_goals': 2.4, 'home_conceded': 0.7, 'away_conceded': 0.9, 'strength': 94},
     'Man City': {'home_goals': 2.8, 'away_goals': 2.2, 'home_conceded': 0.8, 'away_conceded': 1.1, 'strength': 93},
     'Paris SG': {'home_goals': 2.6, 'away_goals': 2.0, 'home_conceded': 0.9, 'away_conceded': 1.2, 'strength': 89},
+    
+    # קבוצות חזקות
     'Liverpool': {'home_goals': 2.5, 'away_goals': 1.9, 'home_conceded': 1.0, 'away_conceded': 1.3, 'strength': 88},
     'Inter': {'home_goals': 2.4, 'away_goals': 1.8, 'home_conceded': 0.9, 'away_conceded': 1.1, 'strength': 86},
     'Arsenal': {'home_goals': 2.4, 'away_goals': 1.8, 'home_conceded': 1.0, 'away_conceded': 1.3, 'strength': 85},
@@ -118,41 +121,114 @@ EUROPEAN_TEAM_STATS = {
     'Milan': {'home_goals': 2.2, 'away_goals': 1.6, 'home_conceded': 1.1, 'away_conceded': 1.3, 'strength': 81},
     'Napoli': {'home_goals': 2.3, 'away_goals': 1.7, 'home_conceded': 1.1, 'away_conceded': 1.4, 'strength': 80},
     'Juventus': {'home_goals': 2.1, 'away_goals': 1.5, 'home_conceded': 1.0, 'away_conceded': 1.2, 'strength': 79},
+    'RB Leipzig': {'home_goals': 2.3, 'away_goals': 1.7, 'home_conceded': 1.2, 'away_conceded': 1.4, 'strength': 79},
+    'Leverkusen': {'home_goals': 2.2, 'away_goals': 1.6, 'home_conceded': 1.1, 'away_conceded': 1.3, 'strength': 78},
+    
+    # קבוצות טובות
     'Atalanta': {'home_goals': 2.3, 'away_goals': 1.7, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 78},
     'Man United': {'home_goals': 2.1, 'away_goals': 1.5, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 77},
-    'Tottenham': {'home_goals': 2.2, 'away_goals': 1.6, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 76}
+    'Tottenham': {'home_goals': 2.2, 'away_goals': 1.6, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 76},
+    'Roma': {'home_goals': 2.0, 'away_goals': 1.4, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 75},
+    'Lazio': {'home_goals': 2.0, 'away_goals': 1.4, 'home_conceded': 1.3, 'away_conceded': 1.5, 'strength': 74},
+    'Villarreal': {'home_goals': 1.9, 'away_goals': 1.3, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 74},
+    'Sevilla': {'home_goals': 1.9, 'away_goals': 1.3, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 73},
+    'Athletic Bilbao': {'home_goals': 1.8, 'away_goals': 1.2, 'home_conceded': 1.1, 'away_conceded': 1.4, 'strength': 73},
+    'Sociedad': {'home_goals': 1.8, 'away_goals': 1.2, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 72},
+    'Betis': {'home_goals': 1.8, 'away_goals': 1.2, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 71},
+    'Monaco': {'home_goals': 1.9, 'away_goals': 1.3, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 72},
+    'Lyon': {'home_goals': 1.8, 'away_goals': 1.2, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 70},
+    'Marseille': {'home_goals': 1.8, 'away_goals': 1.2, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 70},
+    'Fiorentina': {'home_goals': 1.8, 'away_goals': 1.2, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 71},
+    'Bologna': {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 69},
+    'Aston Villa': {'home_goals': 1.9, 'away_goals': 1.3, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 72},
+    'Brighton': {'home_goals': 1.8, 'away_goals': 1.2, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 70},
+    'West Ham': {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 69},
+    
+    # קבוצות בינוניות
+    'Ein Frankfurt': {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 69},
+    'Stuttgart': {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 68},
+    'Hoffenheim': {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 67},
+    'Union Berlin': {'home_goals': 1.6, 'away_goals': 1.0, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 67},
+    'Lille': {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 68},
+    'Nice': {'home_goals': 1.6, 'away_goals': 1.0, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 67},
+    'Rennes': {'home_goals': 1.6, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 66},
+    'Brest': {'home_goals': 1.5, 'away_goals': 0.9, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 65},
+    
+    # קבוצות הולנדיות ופורטוגזיות
+    'Ajax': {'home_goals': 1.9, 'away_goals': 1.3, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 71},
+    'PSV': {'home_goals': 1.8, 'away_goals': 1.2, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 70},
+    'Feyenoord': {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 68},
+    'AZ Alkmaar': {'home_goals': 1.6, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 65},
+    'Twente': {'home_goals': 1.5, 'away_goals': 0.9, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 64},
+    'Benfica': {'home_goals': 1.9, 'away_goals': 1.3, 'home_conceded': 1.1, 'away_conceded': 1.4, 'strength': 72},
+    'Porto': {'home_goals': 1.8, 'away_goals': 1.2, 'home_conceded': 1.1, 'away_conceded': 1.4, 'strength': 71},
+    'Sporting': {'home_goals': 1.8, 'away_goals': 1.2, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 70},
+    'Braga': {'home_goals': 1.6, 'away_goals': 1.0, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 66},
+    
+    # קבוצות טורקיות ויווניות
+    'Galatasaray': {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 67},
+    'Fenerbahce': {'home_goals': 1.6, 'away_goals': 1.0, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 66},
+    'Besiktas': {'home_goals': 1.5, 'away_goals': 0.9, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 64},
+    'Olympiacos': {'home_goals': 1.6, 'away_goals': 1.0, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 65},
+    'PAOK': {'home_goals': 1.5, 'away_goals': 0.9, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 63},
+    
+    # קבוצות סקוטיות ואחרות
+    'Celtic': {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 66},
+    'Rangers': {'home_goals': 1.6, 'away_goals': 1.0, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 65},
+    'Shakhtar': {'home_goals': 1.6, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 64},
+    'Salzburg': {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 66},
+    'Copenhagen': {'home_goals': 1.5, 'away_goals': 0.9, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 63},
+    'Club Brugge': {'home_goals': 1.5, 'away_goals': 0.9, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 63},
+    'Young Boys': {'home_goals': 1.4, 'away_goals': 0.8, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 61},
+    'Red Star Belgrade': {'home_goals': 1.4, 'away_goals': 0.8, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 60},
+    'Sparta Prague': {'home_goals': 1.3, 'away_goals': 0.7, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 59},
+    
+    # Conference League teams
+    'Viktoria Plzen': {'home_goals': 1.4, 'away_goals': 0.8, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 60},
+    'Gent': {'home_goals': 1.4, 'away_goals': 0.8, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 60},
+    'Heidenheim': {'home_goals': 1.3, 'away_goals': 0.7, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 59},
+    'Rapid Wien': {'home_goals': 1.3, 'away_goals': 0.7, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 58},
+    'Molde': {'home_goals': 1.3, 'away_goals': 0.7, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 58},
+    'Legia Warsaw': {'home_goals': 1.3, 'away_goals': 0.7, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 57},
+    'Dinamo Minsk': {'home_goals': 1.2, 'away_goals': 0.6, 'home_conceded': 1.7, 'away_conceded': 2.0, 'strength': 55},
+    'Hearts': {'home_goals': 1.2, 'away_goals': 0.6, 'home_conceded': 1.7, 'away_conceded': 2.0, 'strength': 56},
+    'Petrocub': {'home_goals': 1.1, 'away_goals': 0.5, 'home_conceded': 1.8, 'away_conceded': 2.1, 'strength': 53}
 }
 
 # נתוני ביצועים של קבוצות ישראליות
 ISRAELI_TEAM_STATS = {
-    'מכבי תל אביב': {'home_goals': 2.1, 'away_goals': 1.5, 'home_conceded': 1.0, 'away_conceded': 1.3, 'strength': 75},
-    'מכבי חיפה': {'home_goals': 1.9, 'away_goals': 1.4, 'home_conceded': 1.1, 'away_conceded': 1.4, 'strength': 72},
-    'הפועל באר שבע': {'home_goals': 1.8, 'away_goals': 1.3, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 70},
-    'ביתר ירושלים': {'home_goals': 1.7, 'away_goals': 1.2, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 67},
-    'הפועל תל אביב': {'home_goals': 1.6, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 65},
-    'בני סכנין': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 63},
-    'הפועל ירושלים': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 62},
-    'הפועל חיפה': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 62},
-    'מכבי נתניה': {'home_goals': 1.4, 'away_goals': 0.9, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 60},
-    'אשדוד': {'home_goals': 1.3, 'away_goals': 0.8, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 58},
-    'הפועל פתח תקווה': {'home_goals': 1.3, 'away_goals': 0.8, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 58},
-    'מכבי בני ריינה': {'home_goals': 1.2, 'away_goals': 0.7, 'home_conceded': 1.7, 'away_conceded': 2.0, 'strength': 56},
-    'קריית שמונה': {'home_goals': 1.2, 'away_goals': 0.7, 'home_conceded': 1.7, 'away_conceded': 2.0, 'strength': 55},
-    'עירוני טבריה': {'home_goals': 1.1, 'away_goals': 0.6, 'home_conceded': 1.8, 'away_conceded': 2.1, 'strength': 53}
+    'Maccabi Tel Aviv': {'home_goals': 2.1, 'away_goals': 1.5, 'home_conceded': 1.0, 'away_conceded': 1.3, 'strength': 75},
+    'Maccabi Haifa': {'home_goals': 1.9, 'away_goals': 1.4, 'home_conceded': 1.1, 'away_conceded': 1.4, 'strength': 72},
+    'Hapoel Beer Sheva': {'home_goals': 1.8, 'away_goals': 1.3, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 70},
+    'Beitar Jerusalem': {'home_goals': 1.7, 'away_goals': 1.2, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 67},
+    'Hapoel Tel Aviv': {'home_goals': 1.6, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 65},
+    'Bnei Sakhnin': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 63},
+    'Hapoel Jerusalem': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 62},
+    'Hapoel Haifa': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 62},
+    'Maccabi Netanya': {'home_goals': 1.4, 'away_goals': 0.9, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 60},
+    'Ashdod': {'home_goals': 1.3, 'away_goals': 0.8, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 58},
+    'Hapoel Petah Tikva': {'home_goals': 1.3, 'away_goals': 0.8, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 58},
+    'Maccabi Bnei Raina': {'home_goals': 1.2, 'away_goals': 0.7, 'home_conceded': 1.7, 'away_conceded': 2.0, 'strength': 56},
+    'Ironi Kiryat Shmona': {'home_goals': 1.2, 'away_goals': 0.7, 'home_conceded': 1.7, 'away_conceded': 2.0, 'strength': 55},
+    'Ironi Tiberias': {'home_goals': 1.1, 'away_goals': 0.6, 'home_conceded': 1.8, 'away_conceded': 2.1, 'strength': 53}
 }
 
 def get_team_stats(team, league_type):
     """קבלת סטטיסטיקות קבוצה"""
+    # בדיקה אם הקבוצה קיימת במאגר הנתונים
     if team in EUROPEAN_TEAM_STATS:
         return EUROPEAN_TEAM_STATS[team]
     
     if team in ISRAELI_TEAM_STATS:
         return ISRAELI_TEAM_STATS[team]
     
+    # ערכי ברירת מחדל לפי סוג הליגה
     if league_type == 'Champions League':
         return {'home_goals': 1.9, 'away_goals': 1.3, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 76}
     elif league_type == 'Europa League':
         return {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 71}
+    elif league_type == 'Conference League':
+        return {'home_goals': 1.5, 'away_goals': 0.9, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 65}
     elif league_type == 'ליגת העל הישראלית':
         return {'home_goals': 1.4, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 62}
     else:
@@ -269,7 +345,7 @@ def load_league_data():
 # ----------------------------
 # פונקציות חיזוי
 # ----------------------------
-def predict_match_with_data(home_team, away_team, df):
+def predict_match_with_data(home_team, away_team, df, league_name):
     """חיזוי משחק על בסיס נתונים"""
     try:
         # חיפוש משחקי בית של הקבוצה הביתית
@@ -277,22 +353,58 @@ def predict_match_with_data(home_team, away_team, df):
         # חיפוש משחקי חוץ של הקבוצה האורחת
         away_matches = df[df['AwayTeam'].str.contains(away_team, case=False, na=False)]
         
+        # הצגת מידע דיבאג בסרגל הצד
+        with st.sidebar:
+            st.markdown("### 📊 נתוני CSV")
+            st.markdown(f"**{league_name}**")
+            st.markdown(f"- סה״כ משחקים: {len(df)}")
+            st.markdown(f"- משחקי בית של {home_team}: {len(home_matches)}")
+            st.markdown(f"- משחקי חוץ של {away_team}: {len(away_matches)}")
+        
         # חישוב ממוצעי שערים
         if len(home_matches) > 0:
             home_goals_avg = home_matches['FTHG'].mean()
+            home_conceded_avg = home_matches['FTAG'].mean()
         else:
             home_goals_avg = df['FTHG'].mean() if 'FTHG' in df.columns else 1.5
+            home_conceded_avg = df['FTAG'].mean() if 'FTAG' in df.columns else 1.2
             
         if len(away_matches) > 0:
             away_goals_avg = away_matches['FTAG'].mean()
+            away_conceded_avg = away_matches['FTHG'].mean()
         else:
             away_goals_avg = df['FTAG'].mean() if 'FTAG' in df.columns else 1.2
+            away_conceded_avg = df['FTHG'].mean() if 'FTHG' in df.columns else 1.5
+        
+        # חישוב ממוצעי הליגה
+        league_home_avg = df['FTHG'].mean() if 'FTHG' in df.columns else 1.5
+        league_away_avg = df['FTAG'].mean() if 'FTAG' in df.columns else 1.2
+        
+        # חישוב כוח התקפי והגנתי
+        home_attack_strength = home_goals_avg / league_home_avg if league_home_avg > 0 else 1
+        home_defense_strength = home_conceded_avg / league_away_avg if league_away_avg > 0 else 1
+        away_attack_strength = away_goals_avg / league_away_avg if league_away_avg > 0 else 1
+        away_defense_strength = away_conceded_avg / league_home_avg if league_home_avg > 0 else 1
+        
+        # חישוב שערים צפויים
+        home_expected = home_attack_strength * away_defense_strength * league_home_avg
+        away_expected = away_attack_strength * home_defense_strength * league_away_avg
         
         # וידוא שהערכים תקינים
-        if pd.isna(home_goals_avg) or home_goals_avg <= 0:
-            home_goals_avg = 1.5
-        if pd.isna(away_goals_avg) or away_goals_avg <= 0:
-            away_goals_avg = 1.2
+        if pd.isna(home_expected) or home_expected <= 0:
+            home_expected = 1.5
+        if pd.isna(away_expected) or away_expected <= 0:
+            away_expected = 1.2
+        
+        # הצגת ממוצעים בסרגל הצד
+        with st.sidebar:
+            st.markdown("### ⚽ ממוצעי שערים")
+            st.markdown(f"**{home_team}:**")
+            st.markdown(f"- זכה בבית: {home_goals_avg:.2f}")
+            st.markdown(f"- ספג בבית: {home_conceded_avg:.2f}")
+            st.markdown(f"**{away_team}:**")
+            st.markdown(f"- זכה בחוץ: {away_goals_avg:.2f}")
+            st.markdown(f"- ספג בחוץ: {away_conceded_avg:.2f}")
         
         # חישוב הסתברויות באמצעות פואסון
         max_goals = 5
@@ -300,7 +412,7 @@ def predict_match_with_data(home_team, away_team, df):
         
         for i in range(max_goals + 1):
             for j in range(max_goals + 1):
-                prob = poisson.pmf(i, home_goals_avg) * poisson.pmf(j, away_goals_avg)
+                prob = poisson.pmf(i, home_expected) * poisson.pmf(j, away_expected)
                 if i > j:
                     home_win += prob
                 elif i == j:
@@ -312,21 +424,42 @@ def predict_match_with_data(home_team, away_team, df):
             'home_win': round(home_win, 3),
             'draw': round(draw, 3),
             'away_win': round(away_win, 3),
-            'total_goals': round(home_goals_avg + away_goals_avg, 1)
+            'total_goals': round(home_expected + away_expected, 1),
+            'home_expected': round(home_expected, 2),
+            'away_expected': round(away_expected, 2),
+            'data_source': 'CSV'
         }
-    except:
+    except Exception as e:
+        st.sidebar.error(f"שגיאה בעיבוד נתונים: {str(e)}")
         # ערכי ברירת מחדל במקרה של שגיאה
         return {
             'home_win': 0.45,
             'draw': 0.30,
             'away_win': 0.25,
-            'total_goals': 2.5
+            'total_goals': 2.5,
+            'data_source': 'Default'
         }
 
 def predict_match_european_and_israeli(home_team, away_team, league_type):
     """חיזוי משחק אירופי או ישראלי"""
     home_stats = get_team_stats(home_team, league_type)
     away_stats = get_team_stats(away_team, league_type)
+    
+    # הצגת הסטטיסטיקות שנמצאו
+    with st.sidebar:
+        st.markdown("### 📊 נתוני קבוצות")
+        st.markdown(f"**{home_team}:**")
+        st.markdown(f"- כוח: {home_stats['strength']}")
+        st.markdown(f"- שערים בבית: {home_stats['home_goals']}")
+        st.markdown(f"**{away_team}:**")
+        st.markdown(f"- כוח: {away_stats['strength']}")
+        st.markdown(f"- שערים בחוץ: {away_stats['away_goals']}")
+        
+        # בדיקה אם משתמשים בערכי ברירת מחדל
+        if home_team not in EUROPEAN_TEAM_STATS and home_team not in ISRAELI_TEAM_STATS:
+            st.markdown(f"⚠️ {home_team} - ערכי ברירת מחדל")
+        if away_team not in EUROPEAN_TEAM_STATS and away_team not in ISRAELI_TEAM_STATS:
+            st.markdown(f"⚠️ {away_team} - ערכי ברירת מחדל")
     
     # חישוב יחס כוחות
     strength_ratio = home_stats['strength'] / away_stats['strength']
@@ -353,7 +486,10 @@ def predict_match_european_and_israeli(home_team, away_team, league_type):
         'home_win': round(home_win, 3),
         'draw': round(draw, 3),
         'away_win': round(away_win, 3),
-        'total_goals': round(home_goals + away_goals, 1)
+        'total_goals': round(home_goals + away_goals, 1),
+        'home_expected': round(home_goals, 2),
+        'away_expected': round(away_goals, 2),
+        'data_source': 'Stats DB'
     }
 
 # ----------------------------
@@ -363,6 +499,15 @@ def predict_match_european_and_israeli(home_team, away_team, league_type):
 # טעינת נתונים
 with st.spinner('טוען נתונים...'):
     data = load_league_data()
+
+# הצגת סטטוס טעינת נתונים בסרגל הצד
+with st.sidebar:
+    st.markdown("### 📁 סטטוס נתונים")
+    for league in ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1']:
+        if league in data:
+            st.success(f"✅ {league}")
+        else:
+            st.error(f"❌ {league}")
 
 # בחירת קטגוריה וליגה
 selected_category = st.selectbox("בחר קטגוריה", options=list(league_categories.keys()))
@@ -388,10 +533,10 @@ with col2:
 if st.button("🔮 חשב חיזוי", type="primary", use_container_width=True):
     with st.spinner('מחשב...'):
         # חיזוי לפי סוג הליגה
-        if selected_league in ['Champions League', 'Europa League', 'ליגת העל הישראלית']:
+        if selected_league in ['Champions League', 'Europa League', 'Conference League', 'ליגת העל הישראלית']:
             prediction = predict_match_european_and_israeli(home_team, away_team, selected_league)
         elif selected_league in data:
-            prediction = predict_match_with_data(home_team, away_team, data[selected_league])
+            prediction = predict_match_with_data(home_team, away_team, data[selected_league], selected_league)
         else:
             # אם אין נתונים, נשתמש בערכי ברירת מחדל
             st.warning("אין נתונים זמינים לליגה זו, משתמש בערכים כלליים")
@@ -399,8 +544,13 @@ if st.button("🔮 חשב חיזוי", type="primary", use_container_width=True)
                 'home_win': 0.45,
                 'draw': 0.30,
                 'away_win': 0.25,
-                'total_goals': 2.5
+                'total_goals': 2.5,
+                'data_source': 'Default'
             }
+        
+        # הצגת מקור הנתונים
+        if 'data_source' in prediction:
+            st.info(f"📊 מקור נתונים: {prediction['data_source']}")
         
         # הצגת תוצאות
         st.markdown("---")
@@ -428,6 +578,18 @@ if st.button("🔮 חשב חיזוי", type="primary", use_container_width=True)
                 value=f"{prediction['away_win']*100:.1f}%",
                 delta="ניצחון" if prediction['away_win'] > 0.4 else None
             )
+        
+        # הצגת שערים צפויים (אם זמין)
+        if 'home_expected' in prediction and 'away_expected' in prediction:
+            st.markdown("---")
+            st.subheader("⚽ תוצאה צפויה")
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric(f"{home_team}", f"{prediction['home_expected']:.1f}")
+            with col2:
+                st.markdown("### -")
+            with col3:
+                st.metric(f"{away_team}", f"{prediction['away_expected']:.1f}")
         
         # המלצה
         st.markdown("---")
