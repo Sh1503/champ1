@@ -13,6 +13,17 @@ st.set_page_config(
 )
 st.title("⚽ Football Match Predictor Pro - עונת 2025/2026")
 
+# קיבוץ הליגות - הגדרה מוקדמת
+league_categories = {
+    "🏆 ליגות אירופיות": ['Champions League', 'Europa League', 'Conference League'],
+    "🇬🇧 אנגליה": ['Premier League', 'Championship'],
+    "🇪🇸 ספרד": ['La Liga', 'Segunda División'],
+    "🇮🇹 איטליה": ['Serie A'],
+    "🇩🇪 גרמניה": ['Bundesliga'],
+    "🇫🇷 צרפת": ['Ligue 1'],
+    "🇮🇱 ישראל": ['ליגת העל הישראלית']
+}
+
 # ----------------------------
 # קבוצות לפי ליגה (עונת 2025-2026)
 # ----------------------------
@@ -83,6 +94,11 @@ LEAGUE_TEAMS = {
         'Ajax', 'AZ Alkmaar', 'Twente', 'Braga', 'Porto',
         'Fenerbahce', 'Galatasaray', 'Besiktas',
         'Olympiacos', 'PAOK', 'Rangers', 'Celtic'
+    ],
+    'Conference League': [
+        'Chelsea', 'Fiorentina', 'Viktoria Plzen', 'Gent',
+        'Heidenheim', 'Olympiacos', 'Rapid Wien', 'Molde',
+        'Legia Warsaw', 'Dinamo Minsk', 'Hearts', 'Petrocub'
     ]
 }
 
@@ -112,11 +128,17 @@ ISRAELI_TEAM_STATS = {
     'מכבי תל אביב': {'home_goals': 2.1, 'away_goals': 1.5, 'home_conceded': 1.0, 'away_conceded': 1.3, 'strength': 75},
     'מכבי חיפה': {'home_goals': 1.9, 'away_goals': 1.4, 'home_conceded': 1.1, 'away_conceded': 1.4, 'strength': 72},
     'הפועל באר שבע': {'home_goals': 1.8, 'away_goals': 1.3, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 70},
-    'הפועל תל אביב': {'home_goals': 1.7, 'away_goals': 1.2, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 68},
-    'בני סכנין': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 65},
-    'מכבי פתח תקוה': {'home_goals': 1.4, 'away_goals': 0.9, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 62},
-    'הפועל חיפה': {'home_goals': 1.6, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 64},
-    'עירוני קריית שמונה': {'home_goals': 1.3, 'away_goals': 0.8, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 60}
+    'ביתר ירושלים': {'home_goals': 1.7, 'away_goals': 1.2, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 67},
+    'הפועל תל אביב': {'home_goals': 1.6, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 65},
+    'בני סכנין': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 63},
+    'הפועל ירושלים': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 62},
+    'הפועל חיפה': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 62},
+    'מכבי נתניה': {'home_goals': 1.4, 'away_goals': 0.9, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 60},
+    'אשדוד': {'home_goals': 1.3, 'away_goals': 0.8, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 58},
+    'הפועל פתח תקווה': {'home_goals': 1.3, 'away_goals': 0.8, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 58},
+    'מכבי בני ריינה': {'home_goals': 1.2, 'away_goals': 0.7, 'home_conceded': 1.7, 'away_conceded': 2.0, 'strength': 56},
+    'קריית שמונה': {'home_goals': 1.2, 'away_goals': 0.7, 'home_conceded': 1.7, 'away_conceded': 2.0, 'strength': 55},
+    'עירוני טבריה': {'home_goals': 1.1, 'away_goals': 0.6, 'home_conceded': 1.8, 'away_conceded': 2.1, 'strength': 53}
 }
 
 def get_team_stats(team, league_type):
@@ -337,17 +359,6 @@ def predict_match_european_and_israeli(home_team, away_team, league_type):
 # ----------------------------
 # ממשק משתמש
 # ----------------------------
-
-# קיבוץ הליגות
-    league_categories = {
-    "🏆 ליגות אירופיות": ['Champions League', 'Europa League', 'Conference League'],
-    "🇬🇧 אנגליה": ['Premier League', 'Championship'],
-    "🇪🇸 ספרד": ['La Liga', 'Segunda División'],
-    "🇮🇹 איטליה": ['Serie A'],
-    "🇩🇪 גרמניה": ['Bundesliga'],
-    "🇫🇷 צרפת": ['Ligue 1'],
-    "🇮🇱 ישראל": ['ליגת העל הישראלית']
-}
 
 # טעינת נתונים
 with st.spinner('טוען נתונים...'):
