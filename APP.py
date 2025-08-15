@@ -18,35 +18,35 @@ st.title("⚽ Football Match Predictor Pro - עונת 2025/2026")
 # ----------------------------
 LEAGUE_TEAMS = {
     'Bundesliga': [
-        'Augsburg', 'Bayern Munich', 'Bochum', 'Dortmund', 'Ein Frankfurt',
-        'Freiburg', 'Heidenheim', 'Hoffenheim', 'Holstein Kiel', 'Leverkusen',
+        'Augsburg', 'Bayern Munich', 'Dortmund', 'Ein Frankfurt',
+        'Freiburg', 'Hamburg', 'Heidenheim', 'Hoffenheim', 'Koln', 'Leverkusen',
         "M'gladbach", 'Mainz', 'RB Leipzig', 'St Pauli', 'Stuttgart',
         'Union Berlin', 'Werder Bremen', 'Wolfsburg'
     ],
     'Premier League': [
         'Arsenal', 'Aston Villa', 'Bournemouth', 'Brentford', 'Brighton',
-        'Chelsea', 'Crystal Palace', 'Everton', 'Fulham', 'Ipswich',
-        'Leicester', 'Liverpool', 'Man City', 'Man United', 'Newcastle',
-        "Nott'm Forest", 'Southampton', 'Tottenham', 'West Ham', 'Wolves'
+        'Burnley', 'Chelsea', 'Crystal Palace', 'Everton', 'Fulham',
+        'Leeds', 'Liverpool', 'Man City', 'Man United', 'Newcastle',
+        "Nott'm Forest", 'Sunderland', 'Tottenham', 'West Ham', 'Wolves'
     ],
     'Championship': [
-        'Birmingham', 'Blackburn', 'Bristol City', 'Burnley', 'Cardiff',
-        'Coventry', 'Derby', 'Hull', 'Leeds', 'Luton', 'Middlesbrough', 
-        'Millwall', 'Norwich', 'Oxford United', 'Plymouth', 'Portsmouth', 
-        'Preston', 'QPR', 'Sheffield United', 'Sheffield Weds', 
-        'Stoke', 'Sunderland', 'Swansea', 'Watford', 'West Brom'
+        'Blackburn', 'Bristol City', 'Cardiff', 'Coventry', 'Derby', 
+        'Hull', 'Ipswich', 'Leicester', 'Luton', 'Middlesbrough', 'Millwall', 
+        'Norwich', 'Oxford United', 'Plymouth', 'Portsmouth', 'Preston', 
+        'QPR', 'Sheffield United', 'Sheffield Weds', 'Southampton', 'Stoke', 
+        'Swansea', 'Watford', 'West Brom'
     ],
     'La Liga': [
         'Alaves', 'Ath Bilbao', 'Ath Madrid', 'Barcelona', 'Betis',
-        'Celta', 'Espanyol', 'Getafe', 'Girona', 'Las Palmas', 'Leganes',
-        'Mallorca', 'Osasuna', 'Rayo Vallecano', 'Real Madrid', 'Sevilla', 
-        'Sociedad', 'Valencia', 'Valladolid', 'Villarreal'
+        'Celta', 'Elche', 'Espanyol', 'Getafe', 'Girona', 'Levante',
+        'Mallorca', 'Osasuna', 'Oviedo', 'Rayo Vallecano', 'Real Madrid', 'Sevilla', 
+        'Sociedad', 'Valencia', 'Villarreal'
     ],
     'Segunda División': [
-        'Albacete', 'Almeria', 'Burgos', 'Cadiz', 'Cartagena', 'Castellon',
-        'Cordoba', 'Deportivo', 'Eibar', 'Eldense', 'Elche', 'Granada',
-        'Huesca', 'Levante', 'Malaga', 'Mirandes', 'Oviedo', 'Racing Ferrol',
-        'Racing Santander', 'Sporting Gijon', 'Tenerife', 'Zaragoza'
+        'Albacete', 'Almeria', 'Burgos', 'Cartagena', 'Castellon',
+        'Cordoba', 'Deportivo', 'Eibar', 'Granada', 'Huesca', 'Las Palmas',
+        'Leganes', 'Malaga', 'Mirandes', 'Racing Ferrol', 'Racing Santander', 
+        'Sporting Gijon', 'Tenerife', 'Valladolid', 'Zaragoza'
     ],
     'Ligue 1': [
         'Angers', 'Auxerre', 'Brest', 'Le Havre', 'Lens', 'Lille', 'Lyon',
@@ -57,6 +57,12 @@ LEAGUE_TEAMS = {
         'Atalanta', 'Bologna', 'Cagliari', 'Como', 'Empoli', 'Fiorentina',
         'Genoa', 'Inter', 'Juventus', 'Lazio', 'Lecce', 'Milan', 'Monza',
         'Napoli', 'Parma', 'Roma', 'Torino', 'Udinese', 'Venezia', 'Verona'
+    ],
+    'ליגת העל הישראלית': [
+        'מכבי תל אביב', 'מכבי חיפה', 'הפועל באר שבע', 'הפועל תל אביב', 
+        'בני סכנין', 'מכבי פתח תקוה', 'הפועל חיפה', 'עירוני קריית שמונה',
+        'מכבי נתניה', 'מכבי בני ריינה', 'הפועל עכו', 'אשדוד',
+        'הפועל כפר סבא', 'הפועל ירושלים'
     ],
     'Champions League': [
         'Real Madrid', 'Barcelona', 'Ath Madrid', 'Athletic Bilbao',
@@ -101,15 +107,32 @@ EUROPEAN_TEAM_STATS = {
     'Tottenham': {'home_goals': 2.2, 'away_goals': 1.6, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 76}
 }
 
+# נתוני ביצועים של קבוצות ישראליות
+ISRAELI_TEAM_STATS = {
+    'מכבי תל אביב': {'home_goals': 2.1, 'away_goals': 1.5, 'home_conceded': 1.0, 'away_conceded': 1.3, 'strength': 75},
+    'מכבי חיפה': {'home_goals': 1.9, 'away_goals': 1.4, 'home_conceded': 1.1, 'away_conceded': 1.4, 'strength': 72},
+    'הפועל באר שבע': {'home_goals': 1.8, 'away_goals': 1.3, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 70},
+    'הפועל תל אביב': {'home_goals': 1.7, 'away_goals': 1.2, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 68},
+    'בני סכנין': {'home_goals': 1.5, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 65},
+    'מכבי פתח תקוה': {'home_goals': 1.4, 'away_goals': 0.9, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 62},
+    'הפועל חיפה': {'home_goals': 1.6, 'away_goals': 1.1, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 64},
+    'עירוני קריית שמונה': {'home_goals': 1.3, 'away_goals': 0.8, 'home_conceded': 1.6, 'away_conceded': 1.9, 'strength': 60}
+}
+
 def get_team_stats(team, league_type):
     """קבלת סטטיסטיקות קבוצה"""
     if team in EUROPEAN_TEAM_STATS:
         return EUROPEAN_TEAM_STATS[team]
     
+    if team in ISRAELI_TEAM_STATS:
+        return ISRAELI_TEAM_STATS[team]
+    
     if league_type == 'Champions League':
         return {'home_goals': 1.9, 'away_goals': 1.3, 'home_conceded': 1.3, 'away_conceded': 1.6, 'strength': 76}
     elif league_type == 'Europa League':
         return {'home_goals': 1.7, 'away_goals': 1.1, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 71}
+    elif league_type == 'ליגת העל הישראלית':
+        return {'home_goals': 1.4, 'away_goals': 1.0, 'home_conceded': 1.4, 'away_conceded': 1.7, 'strength': 62}
     else:
         return {'home_goals': 1.5, 'away_goals': 1.2, 'home_conceded': 1.2, 'away_conceded': 1.5, 'strength': 70}
 
@@ -138,30 +161,35 @@ def load_league_data():
     data_sources = {
         "Premier League": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/epl.csv",
+            "https://www.football-data.co.uk/mmz4281/2526/E0.csv",
             "https://www.football-data.co.uk/mmz4281/2425/E0.csv"
         ],
         "Championship": [
-            "https://www.football-data.co.uk/mmz4281/2425/E1.csv",
-            "https://www.football-data.co.uk/mmz4281/2324/E1.csv"
+            "https://www.football-data.co.uk/mmz4281/2526/E1.csv",
+            "https://www.football-data.co.uk/mmz4281/2425/E1.csv"
         ],
         "La Liga": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/laliga.csv",
+            "https://www.football-data.co.uk/mmz4281/2526/SP1.csv",
             "https://www.football-data.co.uk/mmz4281/2425/SP1.csv"
         ],
         "Segunda División": [
-            "https://www.football-data.co.uk/mmz4281/2425/SP2.csv",
-            "https://www.football-data.co.uk/mmz4281/2324/SP2.csv"
+            "https://www.football-data.co.uk/mmz4281/2526/SP2.csv",
+            "https://www.football-data.co.uk/mmz4281/2425/SP2.csv"
         ],
         "Serie A": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/seriea.csv",
+            "https://www.football-data.co.uk/mmz4281/2526/I1.csv",
             "https://www.football-data.co.uk/mmz4281/2425/I1.csv"
         ],
         "Bundesliga": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/bundesliga.csv",
+            "https://www.football-data.co.uk/mmz4281/2526/D1.csv",
             "https://www.football-data.co.uk/mmz4281/2425/D1.csv"
         ],
         "Ligue 1": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/ligue1.csv",
+            "https://www.football-data.co.uk/mmz4281/2526/F1.csv",
             "https://www.football-data.co.uk/mmz4281/2425/F1.csv"
         ]
     }
@@ -245,8 +273,8 @@ def predict_match_with_data(home_team, away_team, df):
             'total_goals': 2.5
         }
 
-def predict_match_european(home_team, away_team, league_type):
-    """חיזוי משחק אירופי"""
+def predict_match_european_and_israeli(home_team, away_team, league_type):
+    """חיזוי משחק אירופי או ישראלי"""
     home_stats = get_team_stats(home_team, league_type)
     away_stats = get_team_stats(away_team, league_type)
     
@@ -289,7 +317,8 @@ league_categories = {
     "🇪🇸 ספרד": ['La Liga', 'Segunda División'],
     "🇮🇹 איטליה": ['Serie A'],
     "🇩🇪 גרמניה": ['Bundesliga'],
-    "🇫🇷 צרפת": ['Ligue 1']
+    "🇫🇷 צרפת": ['Ligue 1'],
+    "🇮🇱 ישראל": ['ליגת העל הישראלית']
 }
 
 # טעינת נתונים
@@ -320,8 +349,8 @@ with col2:
 if st.button("🔮 חשב חיזוי", type="primary", use_container_width=True):
     with st.spinner('מחשב...'):
         # חיזוי לפי סוג הליגה
-        if selected_league in ['Champions League', 'Europa League']:
-            prediction = predict_match_european(home_team, away_team, selected_league)
+        if selected_league in ['Champions League', 'Europa League', 'ליגת העל הישראלית']:
+            prediction = predict_match_european_and_israeli(home_team, away_team, selected_league)
         elif selected_league in data:
             prediction = predict_match_with_data(home_team, away_team, data[selected_league])
         else:
