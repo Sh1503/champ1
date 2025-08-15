@@ -156,50 +156,50 @@ def load_league_data():
     data_sources = {
         "Premier League": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/epl.csv",
-            "https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2024-25/fixtures.csv",
-            "https://raw.githubusercontent.com/football-data-co-uk/football-data/master/england/E0.csv",
-            "https://raw.githubusercontent.com/fivethirtyeight/data/master/soccer-spi/spi_matches.csv"
+            "https://raw.githubusercontent.com/footballcsv/england/master/2024-25/eng.1.csv",
+            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/england/season-2425/E0.csv",
+            "https://raw.githubusercontent.com/jokecamp/FootballData/master/football-data.co.uk/england/E0.csv"
         ],
         "Championship": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/E1%202425.csv",
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/E1%202526.csv",
-            "https://raw.githubusercontent.com/football-data-co-uk/football-data/master/england/E1.csv",
-            "https://raw.githubusercontent.com/jalapic/engsoccerdata/master/data-raw/england/E1.csv"
+            "https://raw.githubusercontent.com/footballcsv/england/master/2024-25/eng.2.csv",
+            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/england/season-2425/E1.csv"
         ],
         "La Liga": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/laliga.csv",
-            "https://raw.githubusercontent.com/football-data-co-uk/football-data/master/spain/SP1.csv",
-            "https://raw.githubusercontent.com/fivethirtyeight/data/master/soccer-spi/spi_matches.csv",
-            "https://raw.githubusercontent.com/jalapic/engsoccerdata/master/data-raw/spain/SP1.csv"
+            "https://raw.githubusercontent.com/footballcsv/espana/master/2024-25/esp.1.csv",
+            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/spain/season-2425/SP1.csv",
+            "https://raw.githubusercontent.com/jokecamp/FootballData/master/football-data.co.uk/spain/SP1.csv"
         ],
         "Segunda División": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/SP2%202425.csv",
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/SP2%202324.csv",
-            "https://raw.githubusercontent.com/football-data-co-uk/football-data/master/spain/SP2.csv",
-            "https://raw.githubusercontent.com/jalapic/engsoccerdata/master/data-raw/spain/SP2.csv"
+            "https://raw.githubusercontent.com/footballcsv/espana/master/2024-25/esp.2.csv",
+            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/spain/season-2425/SP2.csv"
         ],
         "Serie A": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/seriea.csv",
-            "https://raw.githubusercontent.com/football-data-co-uk/football-data/master/italy/I1.csv",
-            "https://raw.githubusercontent.com/fivethirtyeight/data/master/soccer-spi/spi_matches.csv",
-            "https://raw.githubusercontent.com/jalapic/engsoccerdata/master/data-raw/italy/I1.csv"
+            "https://raw.githubusercontent.com/footballcsv/italy/master/2024-25/it.1.csv",
+            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/italy/season-2425/I1.csv",
+            "https://raw.githubusercontent.com/jokecamp/FootballData/master/football-data.co.uk/italy/I1.csv"
         ],
         "Bundesliga": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/bundesliga.csv",
-            "https://raw.githubusercontent.com/football-data-co-uk/football-data/master/germany/D1.csv",
-            "https://raw.githubusercontent.com/fivethirtyeight/data/master/soccer-spi/spi_matches.csv",
-            "https://raw.githubusercontent.com/jalapic/engsoccerdata/master/data-raw/germany/D1.csv"
+            "https://raw.githubusercontent.com/footballcsv/deutschland/master/2024-25/de.1.csv",
+            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/germany/season-2425/D1.csv",
+            "https://raw.githubusercontent.com/jokecamp/FootballData/master/football-data.co.uk/germany/D1.csv"
         ],
         "Ligue 1": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/ligue1.csv",
-            "https://raw.githubusercontent.com/football-data-co-uk/football-data/master/france/F1.csv",
-            "https://raw.githubusercontent.com/fivethirtyeight/data/master/soccer-spi/spi_matches.csv",
-            "https://raw.githubusercontent.com/jalapic/engsoccerdata/master/data-raw/france/F1.csv"
+            "https://raw.githubusercontent.com/footballcsv/france/master/2024-25/fr.1.csv",
+            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/france/season-2425/F1.csv",
+            "https://raw.githubusercontent.com/jokecamp/FootballData/master/football-data.co.uk/france/F1.csv"
         ],
         "Israeli Premier League": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/israeli_league.csv",
-            "https://raw.githubusercontent.com/football-data-co-uk/football-data/master/israel/IL1.csv",
-            "https://raw.githubusercontent.com/openfootball/football.csv/master/israel/il.1.csv"
+            "https://raw.githubusercontent.com/footballcsv/cache.footballdata/master/2024-25/il.1.csv",
+            "https://raw.githubusercontent.com/schochastics/football-data/master/data/results.csv"
         ]
     }
     
