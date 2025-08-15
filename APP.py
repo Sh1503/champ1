@@ -59,10 +59,10 @@ LEAGUE_TEAMS = {
         'Napoli', 'Parma', 'Roma', 'Torino', 'Udinese', 'Venezia', 'Verona'
     ],
     'ליגת העל הישראלית': [
-        'מכבי תל אביב', 'מכבי חיפה', 'הפועל באר שבע', 'הפועל תל אביב', 
-        'בני סכנין', 'מכבי פתח תקוה', 'הפועל חיפה', 'עירוני קריית שמונה',
-        'מכבי נתניה', 'מכבי בני ריינה', 'הפועל עכו', 'אשדוד',
-        'הפועל כפר סבא', 'הפועל ירושלים'
+        'אשדוד', 'ביתר ירושלים', 'בני סכנין', 'הפועל באר שבע', 
+        'הפועל חיפה', 'הפועל ירושלים', 'הפועל פתח תקווה', 'הפועל תל אביב',
+        'קריית שמונה', 'עירוני טבריה', 'מכבי בני ריינה', 
+        'מכבי חיפה', 'מכבי נתניה', 'מכבי תל אביב'
     ],
     'Champions League': [
         'Real Madrid', 'Barcelona', 'Ath Madrid', 'Athletic Bilbao',
@@ -160,44 +160,72 @@ def load_league_data():
     """טעינת נתונים מהאינטרנט"""
     data_sources = {
         "Premier League": [
-            "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/epl.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/epl.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/PL2324.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/PL2223.csv",
             "https://www.football-data.co.uk/mmz4281/2526/E0.csv",
             "https://www.football-data.co.uk/mmz4281/2425/E0.csv"
         ],
         "Championship": [
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/E1%202526.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/E1%202425.csv",
             "https://www.football-data.co.uk/mmz4281/2526/E1.csv",
             "https://www.football-data.co.uk/mmz4281/2425/E1.csv"
         ],
         "La Liga": [
-            "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/laliga.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/laliga.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/LALIGA2324.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/LALIGA2223.csv",
             "https://www.football-data.co.uk/mmz4281/2526/SP1.csv",
             "https://www.football-data.co.uk/mmz4281/2425/SP1.csv"
         ],
         "Segunda División": [
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/SP2%202425.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/SP2%202324.csv",
             "https://www.football-data.co.uk/mmz4281/2526/SP2.csv",
             "https://www.football-data.co.uk/mmz4281/2425/SP2.csv"
         ],
         "Serie A": [
-            "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/seriea.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/seriea.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/SERIE%20A2324.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/SERIE%20A%202223.csv",
             "https://www.football-data.co.uk/mmz4281/2526/I1.csv",
             "https://www.football-data.co.uk/mmz4281/2425/I1.csv"
         ],
         "Bundesliga": [
-            "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/bundesliga.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/bundesliga.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/BUNDESLIGA2324.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/BUNDESLIGA2223.csv",
             "https://www.football-data.co.uk/mmz4281/2526/D1.csv",
             "https://www.football-data.co.uk/mmz4281/2425/D1.csv"
         ],
         "Ligue 1": [
-            "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/ligue1.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/ligue1.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/LIGUE%201%202324.csv",
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/LIGUE1%202223.csv",
             "https://www.football-data.co.uk/mmz4281/2526/F1.csv",
             "https://www.football-data.co.uk/mmz4281/2425/F1.csv"
+        ],
+        "ליגת העל הישראלית": [
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/israel_league.csv"
+        ],
+        "Champions League": [
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/CL.csv"
+        ],
+        "Europa League": [
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/EL.csv"
+        ],
+        "Conference League": [
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/ECL.csv"
         ]
     }
     
     league_data = {}
     for league, urls in data_sources.items():
-        for url in urls:
+        st.write(f"מנסה לטעון נתונים עבור {league}...")
+        for i, url in enumerate(urls):
             try:
+                st.write(f"  מנסה מקור {i+1}: {url.split('/')[-1]}")
                 response = requests.get(url, timeout=10)
                 response.raise_for_status()
                 df = pd.read_csv(StringIO(response.text))
@@ -210,10 +238,21 @@ def load_league_data():
                 
                 if not df.empty and len(df) > 5:
                     league_data[league] = df
+                    st.success(f"  ✅ נטענו {len(df)} משחקים עבור {league}")
                     break
-            except:
+                else:
+                    st.warning(f"  ⚠️ קובץ ריק או קטן מדי")
+            except requests.exceptions.RequestException as e:
+                st.warning(f"  ❌ שגיאת רשת: {str(e)[:50]}...")
                 continue
+            except Exception as e:
+                st.warning(f"  ❌ שגיאה: {str(e)[:50]}...")
+                continue
+        
+        if league not in league_data:
+            st.error(f"לא הצלחתי לטעון נתונים עבור {league}")
     
+    st.write(f"✅ סה\"כ נטענו נתונים עבור {len(league_data)} ליגות")
     return league_data
 
 # ----------------------------
@@ -311,8 +350,8 @@ def predict_match_european_and_israeli(home_team, away_team, league_type):
 # ----------------------------
 
 # קיבוץ הליגות
-league_categories = {
-    "🏆 ליגות אירופיות": ['Champions League', 'Europa League'],
+    league_categories = {
+    "🏆 ליגות אירופיות": ['Champions League', 'Europa League', 'Conference League'],
     "🇬🇧 אנגליה": ['Premier League', 'Championship'],
     "🇪🇸 ספרד": ['La Liga', 'Segunda División'],
     "🇮🇹 איטליה": ['Serie A'],
