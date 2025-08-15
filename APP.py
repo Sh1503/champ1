@@ -60,9 +60,9 @@ LEAGUE_TEAMS = {
         'Sporting Gijon', 'Tenerife', 'Valladolid', 'Zaragoza'
     ],
     'Ligue 1': [
-        'Angers', 'Auxerre', 'Brest', 'Le Havre', 'Lens', 'Lille', 'Lyon',
-        'Marseille', 'Monaco', 'Montpellier', 'Nantes', 'Nice', 'Paris SG',
-        'Reims', 'Rennes', 'St Etienne', 'Strasbourg', 'Toulouse'
+        'Auxerre', 'Brest', 'Le Havre', 'Lens', 'Lille', 'Lorient', 'Lyon',
+        'Marseille', 'Metz', 'Monaco', 'Montpellier', 'Nantes', 'Nice', 
+        'Paris FC', 'Paris SG', 'Rennes', 'Strasbourg', 'Toulouse'
     ],
     'Serie A': [
         'Atalanta', 'Bologna', 'Cagliari', 'Como', 'Empoli', 'Fiorentina',
@@ -70,10 +70,10 @@ LEAGUE_TEAMS = {
         'Napoli', 'Parma', 'Roma', 'Torino', 'Udinese', 'Venezia', 'Verona'
     ],
     'ליגת העל הישראלית': [
-        'אשדוד', 'ביתר ירושלים', 'בני סכנין', 'הפועל באר שבע', 
-        'הפועל חיפה', 'הפועל ירושלים', 'הפועל פתח תקווה', 'הפועל תל אביב',
-        'קריית שמונה', 'עירוני טבריה', 'מכבי בני ריינה', 
-        'מכבי חיפה', 'מכבי נתניה', 'מכבי תל אביב'
+        'Ashdod', 'Beitar Jerusalem', 'Bnei Sakhnin', 'Hapoel Beer Sheva', 
+        'Hapoel Haifa', 'Hapoel Jerusalem', 'Hapoel Petah Tikva', 'Hapoel Tel Aviv',
+        'Ironi Kiryat Shmona', 'Ironi Tiberias', 'Maccabi Bnei Raina', 
+        'Maccabi Haifa', 'Maccabi Netanya', 'Maccabi Tel Aviv'
     ],
     'Champions League': [
         'Real Madrid', 'Barcelona', 'Ath Madrid', 'Athletic Bilbao',
