@@ -207,7 +207,7 @@ def load_league_data():
             "https://www.football-data.co.uk/mmz4281/2425/F1.csv"
         ],
         "ליגת העל הישראלית": [
-            "https://raw.githubusercontent.com/Sh1503/champ1/main/israel_league.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/israeli_premier_league_csv.csv"
         ],
         "Champions League": [
             "https://raw.githubusercontent.com/Sh1503/champ1/main/CL.csv"
