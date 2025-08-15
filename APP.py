@@ -4,6 +4,7 @@ import numpy as np
 from scipy.stats import poisson
 import requests
 from io import StringIO
+import re
 
 # הגדרות דף
 st.set_page_config(
@@ -132,6 +133,78 @@ def get_team_stats(team, league_type):
         return {'home_goals': 1.5, 'away_goals': 0.9, 'home_conceded': 1.5, 'away_conceded': 1.8, 'strength': 66}
 
 # ----------------------------
+# פונקציות עזר לניקוי ומיפוי שמות
+# ----------------------------
+def standardize_column_names(df):
+    """סטנדרטיזציה של שמות עמודות"""
+    column_mappings = {
+        # שמות קבוצות
+        'team1': 'HomeTeam',
+        'Team 1': 'HomeTeam',
+        'Home': 'HomeTeam',
+        'HT': 'HomeTeam',
+        'team2': 'AwayTeam',
+        'Team 2': 'AwayTeam',
+        'Away': 'AwayTeam',
+        'AT': 'AwayTeam',
+        
+        # תוצאות
+        'score1': 'FTHG',
+        'Score 1': 'FTHG',
+        'HomeGoals': 'FTHG',
+        'HG': 'FTHG',
+        'score2': 'FTAG',
+        'Score 2': 'FTAG',
+        'AwayGoals': 'FTAG',
+        'AG': 'FTAG',
+        
+        # קרנות
+        'HomeCorners': 'HC',
+        'AwayCorners': 'AC'
+    }
+    
+    for old_col, new_col in column_mappings.items():
+        if old_col in df.columns and new_col not in df.columns:
+            df = df.rename(columns={old_col: new_col})
+    
+    return df
+
+def clean_team_name(name):
+    """ניקוי שם קבוצה"""
+    if pd.isna(name):
+        return ""
+    # הסרת רווחים מיותרים
+    name = str(name).strip()
+    # החלפת תווים מיוחדים
+    name = name.replace("'", "'")
+    return name
+
+def find_team_in_data(team_name, df, column):
+    """מציאת קבוצה בנתונים עם גמישות בהתאמה"""
+    if column not in df.columns:
+        return pd.DataFrame()
+    
+    # ניסיון 1: התאמה מדויקת
+    matches = df[df[column] == team_name]
+    if not matches.empty:
+        return matches
+    
+    # ניסיון 2: התאמה חלקית
+    matches = df[df[column].str.contains(team_name, case=False, na=False, regex=False)]
+    if not matches.empty:
+        return matches
+    
+    # ניסיון 3: התאמה של חלק מהשם
+    team_parts = team_name.split()
+    for part in team_parts:
+        if len(part) > 3:  # רק מילים משמעותיות
+            matches = df[df[column].str.contains(part, case=False, na=False, regex=False)]
+            if not matches.empty:
+                return matches
+    
+    return pd.DataFrame()
+
+# ----------------------------
 # מקורות נתונים
 # ----------------------------
 def load_data_from_multiple_sources(github_urls):
@@ -141,6 +214,22 @@ def load_data_from_multiple_sources(github_urls):
             response = requests.get(url, timeout=15)
             response.raise_for_status()
             df = pd.read_csv(StringIO(response.text))
+            
+            # סטנדרטיזציה של שמות עמודות
+            df = standardize_column_names(df)
+            
+            # ניקוי שמות קבוצות
+            if 'HomeTeam' in df.columns:
+                df['HomeTeam'] = df['HomeTeam'].apply(clean_team_name)
+            if 'AwayTeam' in df.columns:
+                df['AwayTeam'] = df['AwayTeam'].apply(clean_team_name)
+            
+            # המרת עמודות מספריות
+            numeric_columns = ['FTHG', 'FTAG', 'HC', 'AC']
+            for col in numeric_columns:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
+            
             if not df.empty and len(df) > 10:  # וידוא שיש נתונים מספיקים
                 source_name = url.split('/')[3] if '/' in url else 'unknown'
                 st.info(f"📊 נתונים נטענו מ: {source_name} (מקור {i+1})")
@@ -207,8 +296,6 @@ def load_league_data():
     for league, urls in data_sources.items():
         df = load_data_from_multiple_sources(urls)
         if df is not None:
-            if 'team1' in df.columns:
-                df = df.rename(columns={'team1': 'HomeTeam', 'team2': 'AwayTeam', 'score1': 'FTHG', 'score2': 'FTAG'})
             league_data[league] = df
             st.success(f"✅ נתונים נטענו בהצלחה עבור {league}")
         else:
@@ -217,36 +304,79 @@ def load_league_data():
     return league_data
 
 # ----------------------------
-# פונקציות חיזוי
+# פונקציות חיזוי משופרות
 # ----------------------------
 def predict_match_regular(home_team, away_team, df):
-    home_matches = df[df['HomeTeam'].str.contains(home_team, case=False, na=False)]
-    away_matches = df[df['AwayTeam'].str.contains(away_team, case=False, na=False)]
-    
-    if home_matches.empty or away_matches.empty:
-        home_goals = df['FTHG'].mean() if 'FTHG' in df.columns else 1.5
-        away_goals = df['FTAG'].mean() if 'FTAG' in df.columns else 1.2
-    else:
-        home_goals = home_matches['FTHG'].mean()
-        away_goals = away_matches['FTAG'].mean()
-    
-    max_goals = 5
-    home_win = draw = away_win = 0.0
-    
-    for i in range(max_goals+1):
-        for j in range(max_goals+1):
-            p = poisson.pmf(i, home_goals) * poisson.pmf(j, away_goals)
-            if i > j: home_win += p
-            elif i == j: draw += p
-            else: away_win += p
-    
-    return {
-        "home_win": round(home_win, 3),
-        "draw": round(draw, 3),
-        "away_win": round(away_win, 3),
-        "total_goals": round(home_goals + away_goals, 1),
-        "total_corners": get_corners_prediction(home_team, away_team, df)
-    }
+    """חיזוי משחק רגיל עם טיפול משופר בשגיאות"""
+    try:
+        # בדיקה שהעמודות הנדרשות קיימות
+        required_columns = ['HomeTeam', 'AwayTeam', 'FTHG', 'FTAG']
+        missing_columns = [col for col in required_columns if col not in df.columns]
+        
+        if missing_columns:
+            st.warning(f"חסרות עמודות: {missing_columns}")
+            # ערכי ברירת מחדל
+            home_goals = 1.5
+            away_goals = 1.2
+        else:
+            # מציאת משחקים של הקבוצות
+            home_matches = find_team_in_data(home_team, df, 'HomeTeam')
+            away_matches = find_team_in_data(away_team, df, 'AwayTeam')
+            
+            # חישוב ממוצעים
+            if home_matches.empty and away_matches.empty:
+                st.info("משתמש בממוצעי הליגה")
+                home_goals = df['FTHG'].mean() if not df['FTHG'].isna().all() else 1.5
+                away_goals = df['FTAG'].mean() if not df['FTAG'].isna().all() else 1.2
+            else:
+                if not home_matches.empty:
+                    home_goals = home_matches['FTHG'].mean()
+                else:
+                    home_goals = df['FTHG'].mean() if not df['FTHG'].isna().all() else 1.5
+                
+                if not away_matches.empty:
+                    away_goals = away_matches['FTAG'].mean()
+                else:
+                    away_goals = df['FTAG'].mean() if not df['FTAG'].isna().all() else 1.2
+            
+            # וידוא שהערכים תקינים
+            if pd.isna(home_goals) or home_goals <= 0:
+                home_goals = 1.5
+            if pd.isna(away_goals) or away_goals <= 0:
+                away_goals = 1.2
+        
+        # חישוב הסתברויות
+        max_goals = 5
+        home_win = draw = away_win = 0.0
+        
+        for i in range(max_goals+1):
+            for j in range(max_goals+1):
+                p = poisson.pmf(i, home_goals) * poisson.pmf(j, away_goals)
+                if i > j: 
+                    home_win += p
+                elif i == j: 
+                    draw += p
+                else: 
+                    away_win += p
+        
+        return {
+            "home_win": round(home_win, 3),
+            "draw": round(draw, 3),
+            "away_win": round(away_win, 3),
+            "total_goals": round(home_goals + away_goals, 1),
+            "total_corners": get_corners_prediction(home_team, away_team, df)
+        }
+        
+    except Exception as e:
+        st.error(f"שגיאה בחישוב החיזוי: {str(e)}")
+        # החזרת ערכי ברירת מחדל
+        return {
+            "home_win": 0.4,
+            "draw": 0.3,
+            "away_win": 0.3,
+            "total_goals": 2.5,
+            "total_corners": None
+        }
 
 def predict_match_european(home_team, away_team, league_type):
     home_stats = get_team_stats(home_team, league_type)
@@ -264,9 +394,12 @@ def predict_match_european(home_team, away_team, league_type):
     for i in range(max_goals+1):
         for j in range(max_goals+1):
             p = poisson.pmf(i, home_goals_expected) * poisson.pmf(j, away_goals_expected)
-            if i > j: home_win += p
-            elif i == j: draw += p
-            else: away_win += p
+            if i > j: 
+                home_win += p
+            elif i == j: 
+                draw += p
+            else: 
+                away_win += p
     
     corners_home = 5.5 + (home_stats['strength'] - 75) * 0.05
     corners_away = 4.5 + (away_stats['strength'] - 75) * 0.03
@@ -280,11 +413,28 @@ def predict_match_european(home_team, away_team, league_type):
     }
 
 def get_corners_prediction(home_team, away_team, df):
-    if 'HC' in df.columns and 'AC' in df.columns:
-        home_corners = df[df['HomeTeam'].str.contains(home_team, case=False, na=False)]['HC'].mean()
-        away_corners = df[df['AwayTeam'].str.contains(away_team, case=False, na=False)]['AC'].mean()
-        if not pd.isna(home_corners) and not pd.isna(away_corners):
-            return round(home_corners + away_corners, 1)
+    """חיזוי קרנות עם טיפול משופר בשגיאות"""
+    try:
+        if 'HC' in df.columns and 'AC' in df.columns:
+            home_matches = find_team_in_data(home_team, df, 'HomeTeam')
+            away_matches = find_team_in_data(away_team, df, 'AwayTeam')
+            
+            if not home_matches.empty and 'HC' in home_matches.columns:
+                home_corners = home_matches['HC'].mean()
+            else:
+                home_corners = None
+            
+            if not away_matches.empty and 'AC' in away_matches.columns:
+                away_corners = away_matches['AC'].mean()
+            else:
+                away_corners = None
+            
+            if home_corners is not None and away_corners is not None:
+                if not pd.isna(home_corners) and not pd.isna(away_corners):
+                    return round(home_corners + away_corners, 1)
+    except:
+        pass
+    
     return None
 
 def predict_match(home_team, away_team, league, df=None):
@@ -296,13 +446,16 @@ def predict_match(home_team, away_team, league, df=None):
 # ----------------------------
 # ממשק משתמש
 # ----------------------------
-data = load_league_data()
+# טעינת נתונים
+with st.spinner('🔄 טוען נתונים...'):
+    data = load_league_data()
 
 # קיבוץ הליגות
 league_categories = {
     "🏆 ליגות אירופיות": ['Champions League', 'Europa League', 'Conference League'],
     "🇪🇺 ליגות ראשונות": ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1'],
-    "🏟️ ליגות שניות": ['Championship', 'Segunda División']
+    "🏟️ ליגות שניות": ['Championship', 'Segunda División'],
+    "🇮🇱 ליגה ישראלית": ['Israeli Premier League']
 }
 
 # בחירת קטגוריה וליגה
@@ -320,59 +473,135 @@ if selected_league in LEAGUE_TEAMS:
     with col2:
         away_team = st.selectbox("קבוצה אורחת", options=[t for t in teams if t != home_team])
     
-    if st.button("חשב חיזוי ⚡", type="primary"):
-        if selected_league in ['Champions League', 'Europa League', 'Conference League']:
-            prediction = predict_match(home_team, away_team, selected_league)
-        elif selected_league in data and not data[selected_league].empty:
-            prediction = predict_match(home_team, away_team, selected_league, data[selected_league])
+    # הצגת מידע על זמינות הנתונים
+    if selected_league not in ['Champions League', 'Europa League', 'Conference League']:
+        if selected_league in data and not data[selected_league].empty:
+            st.success(f"✅ נתונים זמינים עבור {selected_league}")
+            with st.expander("📊 פרטי הנתונים"):
+                df = data[selected_league]
+                st.write(f"מספר משחקים: {len(df)}")
+                if 'HomeTeam' in df.columns and 'AwayTeam' in df.columns:
+                    unique_teams = pd.concat([df['HomeTeam'], df['AwayTeam']]).unique()
+                    st.write(f"קבוצות בנתונים: {len(unique_teams)}")
+                    if st.checkbox("הצג רשימת קבוצות בנתונים"):
+                        st.write(sorted([t for t in unique_teams if pd.notna(t)]))
         else:
-            st.error("לא נמצאו נתונים עבור הליגה הנבחרת")
-            st.stop()
-        
-        # הצגת תוצאות
-        st.subheader("🔮 תוצאות חיזוי:")
-        
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.metric(label=f"🏠 ניצחון ל־{home_team}", value=f"{prediction['home_win']*100:.1f}%")
-        with col2:
-            st.metric(label="🤝 תיקו", value=f"{prediction['draw']*100:.1f}%")
-        with col3:
-            st.metric(label=f"✈️ ניצחון ל־{away_team}", value=f"{prediction['away_win']*100:.1f}%")
-        
-        st.divider()
-        
-        # סטטיסטיקות נוספות
-        st.subheader("📊 סטטיסטיקות נוספות")
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.metric("⚽ שערים צפויים", f"{prediction['total_goals']}")
-        
-        with col2:
-            if prediction['total_corners'] is not None:
-                st.metric("🚩 קרנות צפויות", f"{prediction['total_corners']}")
-            else:
-                st.metric("🚩 קרנות צפויות", "לא זמין")
-        
-        # המלצות הימור
-        st.subheader("💡 המלצות")
-        max_prob = max(prediction['home_win'], prediction['draw'], prediction['away_win'])
-        
-        if max_prob == prediction['home_win']:
-            st.success(f"🏠 ההימור המומלץ: ניצחון ל־{home_team} ({prediction['home_win']*100:.1f}%)")
-        elif max_prob == prediction['draw']:
-            st.success(f"🤝 ההימור המומלץ: תיקו ({prediction['draw']*100:.1f}%)")
-        else:
-            st.success(f"✈️ ההימור המומלץ: ניצחון ל־{away_team} ({prediction['away_win']*100:.1f}%)")
-        
-        if prediction['total_goals'] > 2.5:
-            st.info(f"⚽ משחק עתיר שערים - המלצה: מעל 2.5 שערים ({prediction['total_goals']} צפוי)")
-        else:
-            st.info(f"🛡️ משחק דחוס - המלצה: מתחת ל-2.5 שערים ({prediction['total_goals']} צפוי)")
+            st.warning(f"⚠️ אין נתונים זמינים עבור {selected_league} - משתמש בערכי ברירת מחדל")
+    
+    if st.button("חשב חיזוי ⚡", type="primary", use_container_width=True):
+        with st.spinner('מחשב חיזוי...'):
+            try:
+                if selected_league in ['Champions League', 'Europa League', 'Conference League']:
+                    prediction = predict_match(home_team, away_team, selected_league)
+                elif selected_league in data and not data[selected_league].empty:
+                    prediction = predict_match(home_team, away_team, selected_league, data[selected_league])
+                else:
+                    # יצירת DataFrame ריק עם ערכי ברירת מחדל
+                    st.warning("משתמש בערכי ברירת מחדל")
+                    empty_df = pd.DataFrame(columns=['HomeTeam', 'AwayTeam', 'FTHG', 'FTAG'])
+                    prediction = predict_match(home_team, away_team, selected_league, empty_df)
+                
+                # הצגת תוצאות
+                st.subheader("🔮 תוצאות חיזוי:")
+                
+                # גרף עוגה להסתברויות
+                import plotly.graph_objects as go
+                
+                fig = go.Figure(data=[go.Pie(
+                    labels=[f'{home_team} (ניצחון)', 'תיקו', f'{away_team} (ניצחון)'],
+                    values=[prediction['home_win'], prediction['draw'], prediction['away_win']],
+                    hole=.3,
+                    marker_colors=['#2ecc71', '#95a5a6', '#e74c3c']
+                )])
+                fig.update_layout(
+                    title=f"{home_team} vs {away_team}",
+                    height=300
+                )
+                st.plotly_chart(fig, use_container_width=True)
+                
+                # הסתברויות
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric(
+                        label=f"🏠 {home_team}", 
+                        value=f"{prediction['home_win']*100:.1f}%",
+                        delta="ניצחון ביתי" if prediction['home_win'] > 0.4 else None
+                    )
+                with col2:
+                    st.metric(
+                        label="🤝 תיקו", 
+                        value=f"{prediction['draw']*100:.1f}%"
+                    )
+                with col3:
+                    st.metric(
+                        label=f"✈️ {away_team}", 
+                        value=f"{prediction['away_win']*100:.1f}%",
+                        delta="ניצחון חוץ" if prediction['away_win'] > 0.4 else None
+                    )
+                
+                st.divider()
+                
+                # סטטיסטיקות נוספות
+                st.subheader("📊 סטטיסטיקות נוספות")
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    goals_color = "🔴" if prediction['total_goals'] > 3 else "🟡" if prediction['total_goals'] > 2.5 else "🟢"
+                    st.metric(f"{goals_color} שערים צפויים", f"{prediction['total_goals']}")
+                
+                with col2:
+                    if prediction['total_corners'] is not None:
+                        st.metric("🚩 קרנות צפויות", f"{prediction['total_corners']}")
+                    else:
+                        st.metric("🚩 קרנות צפויות", "לא זמין")
+                
+                # המלצות הימור
+                st.subheader("💡 המלצות")
+                
+                # המלצה ראשית
+                max_prob = max(prediction['home_win'], prediction['draw'], prediction['away_win'])
+                
+                if max_prob == prediction['home_win']:
+                    st.success(f"🏠 **ההימור המומלץ: ניצחון ל־{home_team}** ({prediction['home_win']*100:.1f}%)")
+                elif max_prob == prediction['draw']:
+                    st.success(f"🤝 **ההימור המומלץ: תיקו** ({prediction['draw']*100:.1f}%)")
+                else:
+                    st.success(f"✈️ **ההימור המומלץ: ניצחון ל־{away_team}** ({prediction['away_win']*100:.1f}%)")
+                
+                # המלצות נוספות
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    if prediction['total_goals'] > 2.5:
+                        st.info(f"⚽ **מעל 2.5 שערים** (צפוי: {prediction['total_goals']})")
+                    else:
+                        st.info(f"🛡️ **מתחת ל-2.5 שערים** (צפוי: {prediction['total_goals']})")
+                
+                with col2:
+                    if prediction['total_goals'] > 3.5:
+                        st.info(f"🔥 **משחק פתוח** - המלצה: מעל 3.5")
+                    elif prediction['total_goals'] < 2:
+                        st.info(f"🔒 **משחק סגור** - המלצה: מתחת ל-2.5")
+                    else:
+                        st.info(f"⚖️ **משחק מאוזן** - 2-3 שערים צפויים")
+                
+                # כפתור לחיזוי נוסף
+                if st.button("🔄 חיזוי נוסף", use_container_width=True):
+                    st.rerun()
+                    
+            except Exception as e:
+                st.error(f"❌ שגיאה בחישוב החיזוי: {str(e)}")
+                st.info("נסה לבחור קבוצות אחרות או ליגה אחרת")
 
 else:
     st.error("שגיאה בטעינת נתוני הליגה")
 
+# Footer
 st.markdown("---")
-st.markdown("*נבנה עם ❤️ לחובבי כדורגל*")
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.markdown("*נבנה עם ❤️ לחובבי כדורגל*")
+with col2:
+    st.markdown("*עונת 2025/2026*")
+with col3:
+    st.markdown("*הימורו באחריות*")
