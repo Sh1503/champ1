@@ -207,7 +207,7 @@ def load_league_data():
             "https://www.football-data.co.uk/mmz4281/2425/F1.csv"
         ],
         "ליגת העל הישראלית": [
-            "https://raw.githubusercontent.com/Sh1503/champ1/main/israeli_premier_league_csv.csv"
+            "https://raw.githubusercontent.com/Sh1503/champ1/main/israeli_premier_league_csv.csv.txt"
         ],
         "Champions League": [
             "https://raw.githubusercontent.com/Sh1503/champ1/main/CL.csv"
@@ -222,10 +222,8 @@ def load_league_data():
     
     league_data = {}
     for league, urls in data_sources.items():
-        st.write(f"מנסה לטעון נתונים עבור {league}...")
         for i, url in enumerate(urls):
             try:
-                st.write(f"  מנסה מקור {i+1}: {url.split('/')[-1]}")
                 response = requests.get(url, timeout=10)
                 response.raise_for_status()
                 df = pd.read_csv(StringIO(response.text))
@@ -238,21 +236,12 @@ def load_league_data():
                 
                 if not df.empty and len(df) > 5:
                     league_data[league] = df
-                    st.success(f"  ✅ נטענו {len(df)} משחקים עבור {league}")
                     break
-                else:
-                    st.warning(f"  ⚠️ קובץ ריק או קטן מדי")
-            except requests.exceptions.RequestException as e:
-                st.warning(f"  ❌ שגיאת רשת: {str(e)[:50]}...")
+            except requests.exceptions.RequestException:
                 continue
-            except Exception as e:
-                st.warning(f"  ❌ שגיאה: {str(e)[:50]}...")
+            except Exception:
                 continue
-        
-        if league not in league_data:
-            st.error(f"לא הצלחתי לטעון נתונים עבור {league}")
     
-    st.write(f"✅ סה\"כ נטענו נתונים עבור {len(league_data)} ליגות")
     return league_data
 
 # ----------------------------
