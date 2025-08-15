@@ -246,60 +246,61 @@ def load_league_data():
         "Premier League": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/epl.csv",
             "https://raw.githubusercontent.com/footballcsv/england/master/2024-25/eng.1.csv",
-            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/england/season-2425/E0.csv",
-            "https://raw.githubusercontent.com/jokecamp/FootballData/master/football-data.co.uk/england/E0.csv"
+            "https://www.football-data.co.uk/mmz4281/2425/E0.csv",
+            "https://www.football-data.co.uk/mmz4281/2324/E0.csv"
         ],
         "Championship": [
-            "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/E1%202425.csv",
-            "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/E1%202526.csv",
-            "https://raw.githubusercontent.com/footballcsv/england/master/2024-25/eng.2.csv",
-            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/england/season-2425/E1.csv"
+            "https://www.football-data.co.uk/mmz4281/2425/E1.csv",
+            "https://www.football-data.co.uk/mmz4281/2324/E1.csv",
+            "https://raw.githubusercontent.com/footballcsv/england/master/2023-24/eng.2.csv"
         ],
         "La Liga": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/laliga.csv",
-            "https://raw.githubusercontent.com/footballcsv/espana/master/2024-25/esp.1.csv",
-            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/spain/season-2425/SP1.csv",
-            "https://raw.githubusercontent.com/jokecamp/FootballData/master/football-data.co.uk/spain/SP1.csv"
+            "https://www.football-data.co.uk/mmz4281/2425/SP1.csv",
+            "https://www.football-data.co.uk/mmz4281/2324/SP1.csv"
         ],
         "Segunda División": [
-            "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/SP2%202425.csv",
-            "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/SP2%202324.csv",
-            "https://raw.githubusercontent.com/footballcsv/espana/master/2024-25/esp.2.csv",
-            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/spain/season-2425/SP2.csv"
+            "https://www.football-data.co.uk/mmz4281/2425/SP2.csv",
+            "https://www.football-data.co.uk/mmz4281/2324/SP2.csv",
+            "https://raw.githubusercontent.com/footballcsv/espana/master/2023-24/esp.2.csv"
         ],
         "Serie A": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/seriea.csv",
-            "https://raw.githubusercontent.com/footballcsv/italy/master/2024-25/it.1.csv",
-            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/italy/season-2425/I1.csv",
-            "https://raw.githubusercontent.com/jokecamp/FootballData/master/football-data.co.uk/italy/I1.csv"
+            "https://www.football-data.co.uk/mmz4281/2425/I1.csv",
+            "https://www.football-data.co.uk/mmz4281/2324/I1.csv"
         ],
         "Bundesliga": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/bundesliga.csv",
-            "https://raw.githubusercontent.com/footballcsv/deutschland/master/2024-25/de.1.csv",
-            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/germany/season-2425/D1.csv",
-            "https://raw.githubusercontent.com/jokecamp/FootballData/master/football-data.co.uk/germany/D1.csv"
+            "https://www.football-data.co.uk/mmz4281/2425/D1.csv",
+            "https://www.football-data.co.uk/mmz4281/2324/D1.csv"
         ],
         "Ligue 1": [
             "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/ligue1.csv",
-            "https://raw.githubusercontent.com/footballcsv/france/master/2024-25/fr.1.csv",
-            "https://raw.githubusercontent.com/datasets/football-datasets/master/datasets/france/season-2425/F1.csv",
-            "https://raw.githubusercontent.com/jokecamp/FootballData/master/football-data.co.uk/france/F1.csv"
+            "https://www.football-data.co.uk/mmz4281/2425/F1.csv",
+            "https://www.football-data.co.uk/mmz4281/2324/F1.csv"
         ],
         "Israeli Premier League": [
-            "https://raw.githubusercontent.com/sh1503/football-match-predictor/main/israeli_league.csv",
-            "https://raw.githubusercontent.com/footballcsv/cache.footballdata/master/2024-25/il.1.csv",
-            "https://raw.githubusercontent.com/schochastics/football-data/master/data/results.csv"
+            "https://www.football-data.co.uk/new/ISR.csv"
         ]
     }
     
     league_data = {}
+    successful_leagues = []
+    failed_leagues = []
+    
     for league, urls in data_sources.items():
         df = load_data_from_multiple_sources(urls)
         if df is not None:
             league_data[league] = df
-            st.success(f"✅ נתונים נטענו בהצלחה עבור {league}")
+            successful_leagues.append(league)
         else:
-            st.error(f"❌ לא ניתן לטעון נתונים עבור {league}")
+            failed_leagues.append(league)
+    
+    # הצגת סיכום טעינה
+    if successful_leagues:
+        st.success(f"✅ נטענו בהצלחה: {', '.join(successful_leagues)}")
+    if failed_leagues:
+        st.warning(f"⚠️ לא זמינים: {', '.join(failed_leagues)}")
     
     return league_data
 
@@ -450,6 +451,53 @@ def predict_match(home_team, away_team, league, df=None):
 with st.spinner('🔄 טוען נתונים...'):
     data = load_league_data()
 
+# הוספת אפשרות לטעינת קובץ ידנית
+with st.sidebar:
+    st.header("⚙️ הגדרות")
+    
+    # אפשרות להעלות קובץ CSV
+    st.subheader("📁 העלה נתונים משלך")
+    uploaded_file = st.file_uploader("בחר קובץ CSV", type=['csv'])
+    
+    if uploaded_file is not None:
+        try:
+            custom_df = pd.read_csv(uploaded_file)
+            custom_df = standardize_column_names(custom_df)
+            
+            # ניקוי שמות קבוצות
+            if 'HomeTeam' in custom_df.columns:
+                custom_df['HomeTeam'] = custom_df['HomeTeam'].apply(clean_team_name)
+            if 'AwayTeam' in custom_df.columns:
+                custom_df['AwayTeam'] = custom_df['AwayTeam'].apply(clean_team_name)
+            
+            custom_league = st.text_input("שם הליגה", value="Custom League")
+            if st.button("הוסף ליגה"):
+                data[custom_league] = custom_df
+                LEAGUE_TEAMS[custom_league] = list(pd.concat([custom_df['HomeTeam'], custom_df['AwayTeam']]).unique())
+                st.success(f"✅ הליגה {custom_league} נוספה בהצלחה!")
+                st.rerun()
+        except Exception as e:
+            st.error(f"שגיאה בקריאת הקובץ: {str(e)}")
+    
+    st.divider()
+    
+    # הצגת סטטוס נתונים
+    st.subheader("📊 סטטוס נתונים")
+    for league in data.keys():
+        if league in data:
+            st.success(f"✅ {league}")
+    
+    # ליגות ללא נתונים
+    all_leagues = set()
+    for category_leagues in league_categories.values():
+        all_leagues.update(category_leagues)
+    
+    missing_leagues = all_leagues - set(data.keys())
+    if missing_leagues:
+        st.subheader("⚠️ ליגות ללא נתונים")
+        for league in missing_leagues:
+            st.warning(f"❌ {league}")
+
 # קיבוץ הליגות
 league_categories = {
     "🏆 ליגות אירופיות": ['Champions League', 'Europa League', 'Conference League'],
@@ -458,10 +506,25 @@ league_categories = {
     "🇮🇱 ליגה ישראלית": ['Israeli Premier League']
 }
 
+# הוספת קטגוריה לליגות מותאמות אישית
+if any(league not in sum(league_categories.values(), []) for league in data.keys()):
+    custom_leagues = [league for league in data.keys() if league not in sum(league_categories.values(), [])]
+    if custom_leagues:
+        league_categories["🔧 ליגות מותאמות"] = custom_leagues
+
 # בחירת קטגוריה וליגה
 selected_category = st.selectbox("בחר קטגוריה", options=list(league_categories.keys()))
 available_leagues = league_categories[selected_category]
-selected_league = st.selectbox("בחר ליגה", options=available_leagues)
+
+# סינון רק ליגות זמינות
+available_leagues_with_data = [l for l in available_leagues if l in LEAGUE_TEAMS]
+
+if not available_leagues_with_data:
+    st.error(f"❌ אין ליגות זמינות בקטגוריה {selected_category}")
+    st.info("💡 נסה קטגוריה אחרת או העלה קובץ נתונים בסרגל הצדדי")
+    st.stop()
+
+selected_league = st.selectbox("בחר ליגה", options=available_leagues_with_data)
 
 if selected_league in LEAGUE_TEAMS:
     teams = LEAGUE_TEAMS[selected_league]
